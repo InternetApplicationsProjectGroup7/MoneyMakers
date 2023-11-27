@@ -12,7 +12,7 @@ urlpatterns = [
     path('forgotpassword',views.forgot_password,name="forgotpassword"),
     path('changepassword',views.change_password,name="changepassword"),
     path('process_form/', views.handle_user_input, name='process_form'),
-    path('account/',include('allauth.urls')),
+    # path('account/',include('allauth.urls')),
     path('coins/<str:coin_name>/', views.dynamic_Crypto, name='dynamic_crypto'),
     path('userprofile/', views.handle_user_profile, name='profile'),
     path('userprofile/accountsecurity/', views.update_user_password, name='change password'),
