@@ -53,47 +53,6 @@ def index(request):
     }
     return render(request, 'FrontEnd/index.html',context)
 
-
-
-# def user_login(request):
-#     if request.session.get('user_session_id'):
-#         return HttpResponseRedirect(reverse('MoneyMakers:index'))
-#     if request.method == 'POST':
-#         form = LoginForm(request.POST)
-#         if form.is_valid():
-#             email = form.cleaned_data['email']
-#             password = form.cleaned_data['password']
-
-#             try:
-#                 user = UserDetails.objects.get(email=email)
-#                 print("user details are:", user.password)
-#                 if user:
-#                     if user.password is None:
-#                         form.add_error(None, 'Google Auth Sign In Required')
-#                     else:
-#                         if check_password(password, user.password):
-#                             # Manually set the user's ID in the session to log them in
-#                             request.session['user_session_id'] = user.id
-
-#                             return redirect('MoneyMakers:index')
-#                             # # Redirect to the user's profile page
-#                             # return HttpResponseRedirect(reverse('MoneyMakers:profile'))
-#                         else:
-#                             form.add_error(None, 'Invalid login credentials')
-#                             return redirect('/login')
-#                 # else:
-#                 #     form.add_error(None, 'User Does Not Exist')
-#                 #     return redirect('/')                    
-
-#             except UserDetails.DoesNotExist:
-#                 form.add_error(None, 'User does not exist')
-#                 return redirect('/login')     
-#     else:
-#         form = LoginForm()
-#         return render(request, 'FrontEnd/login.html', {'form': form})
-
-# from django.contrib import messages
-
 def login_user(request):
     if request.session.get('user_session_id'):
         return HttpResponseRedirect(reverse('MoneyMakers:index'))
@@ -227,7 +186,7 @@ def change_password(request):
                 print("user details are:", user.secure_password)
 
                 if user.secure_password is None:
-                    form.add_error(None, 'Google Auth Sign In Required')
+                    form.add_error(None, 'google Auth Sign In Required')
                 else:
                     if request.session.get('otp') and otp == request.session.get('otp'):
 

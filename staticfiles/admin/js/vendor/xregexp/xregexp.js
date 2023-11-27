@@ -3816,21 +3816,6 @@ XRegExp.match = function(str, regex, scope) {
  * @returns {Array} Matches by the last regex in the chain, or an empty array.
  * @example
  *
- * // Basic usage; matches numbers within <b> tags
- * XRegExp.matchChain('1 <b>2</b> 3 <b>4 a 56</b>', [
- *   XRegExp('(?is)<b>.*?</b>'),
- *   /\d+/
- * ]);
- * // -> ['2', '4', '56']
- *
- * // Passing forward and returning specific backreferences
- * html = '<a href="http://xregexp.com/api/">XRegExp</a>\
- *         <a href="http://www.google.com/">Google</a>';
- * XRegExp.matchChain(html, [
- *   {regex: /<a href="([^"]+)">/i, backref: 1},
- *   {regex: XRegExp('(?i)^https?://(?<domain>[^/?#]+)'), backref: 'domain'}
- * ]);
- * // -> ['xregexp.com', 'www.google.com']
  */
 XRegExp.matchChain = function(str, chain) {
     return (function recurseChain(values, level) {

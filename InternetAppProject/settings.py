@@ -48,10 +48,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     'MoneyMakers.apps.MoneyMakersConfig',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
 
 ]
 
@@ -63,7 +59,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware"
+    # "allauth.account.middleware.AccountMiddleware"
 ]
 
 ROOT_URLCONF = "InternetAppProject.urls"
@@ -155,13 +151,13 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
 
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "SCOPE": [
-            'profile',
-            'email',],
-        "AUTH PARAMS":{
-            "access_type": "online",
-        }
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     "google": {
+#         "SCOPE": [
+#             'profile',
+#             'email',],
+#         "AUTH PARAMS":{
+#             "access_type": "online",
+#         }
+#     }
+# }
