@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    'CryptoCrackers.apps.CryptocrackersConfig',
+    'MoneyMakers.apps.MoneyMakersConfig',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -148,7 +148,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATICFILES_DIRS = [
-    BASE_DIR / "CryptoCrackers/../static",
+    BASE_DIR / "MoneyMakers/../static",
 ]
 
 SITE_ID = 1

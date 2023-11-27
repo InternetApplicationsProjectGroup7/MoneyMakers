@@ -152,7 +152,7 @@
                 })
 
                 document.getElementById(sectionId).style.display = 'block';
-                {#window.location.href = "{% url 'CryptoCrackers:add_money' %}"#}
+                {#window.location.href = "{% url 'MoneyMakers:add_money' %}"#}
 
                 // Use the |escapejs filter to escape special characters
                 {#console.log("User:", email);#}
@@ -206,14 +206,14 @@
         <div class="profile-container">
             <div class="sidebar">
                 <ul>
-                    <li><a href="{% url 'CryptoCrackers:profile' %}" >Profile Details</a></li>
+                    <li><a href="{% url 'MoneyMakers:profile' %}" >Profile Details</a></li>
                     <li><a onclick="accountSecurity()" >Account Security</a></li>
-                    <li><a href="{% url 'CryptoCrackers:wishlist' %}" >Wishlist</a></li>
-                    <li><a href="{% url 'CryptoCrackers:add_money' %}" >Add Money to Wallet</a></li>
-                    <li><a href="{% url 'CryptoCrackers:purchase_currency' %}" >Purchase Crypto Currency</a></li>
-                    <li><a href="{% url 'CryptoCrackers:sell_currency' %}" >Sell Crypto Currency</a></li>
-                    <!-- <li><a href="{% url 'CryptoCrackers:user_purchases' %}">View Purchases</a></li> -->
-    <li><a href="{% url 'CryptoCrackers:user_purchases' %}" onclick="showSection('user_purchases')">View Purchases</a></li>
+                    <li><a href="{% url 'MoneyMakers:wishlist' %}" >Wishlist</a></li>
+                    <li><a href="{% url 'MoneyMakers:add_money' %}" >Add Money to Wallet</a></li>
+                    <li><a href="{% url 'MoneyMakers:purchase_currency' %}" >Purchase Crypto Currency</a></li>
+                    <li><a href="{% url 'MoneyMakers:sell_currency' %}" >Sell Crypto Currency</a></li>
+                    <!-- <li><a href="{% url 'MoneyMakers:user_purchases' %}">View Purchases</a></li> -->
+    <li><a href="{% url 'MoneyMakers:user_purchases' %}" onclick="showSection('user_purchases')">View Purchases</a></li>
 
                 </ul>
             </div>
@@ -293,7 +293,7 @@
                     <ul>
                         {% for wishlist_item in wish_list %}
                             <li>
-                                <a href="{% url 'CryptoCrackers:dynamic_crypto' coin_name=wishlist_item %}">
+                                <a href="{% url 'MoneyMakers:dynamic_crypto' coin_name=wishlist_item %}">
                                     <span>{{ wishlist_item }}</span>
                                 </a>
                                 <a href="remove_to_wishlist/{{ wishlist_item }}">
@@ -453,7 +453,7 @@
                         // Use AJAX to submit the form data to your Django view
                             // const formData = new FormData(document.getElementById("purchaseForm"));
 
-                            // fetch("{% url 'CryptoCrackers:purchase_currency' %}", {
+                            // fetch("{% url 'MoneyMakers:purchase_currency' %}", {
                             //     method: "POST",
                             //     body: formData,
                             // })
@@ -480,7 +480,7 @@
                         // Use AJAX to submit the form data to your Django view
                         const formData = new FormData(document.getElementById("addmoney"));
 
-                        fetch("{% url 'CryptoCrackers:add_money' %}", {
+                        fetch("{% url 'MoneyMakers:add_money' %}", {
                             method: "POST",
                             body: formData,
                         })

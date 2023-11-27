@@ -8,7 +8,7 @@
 <!--?{#<body>#}-->
 <!--?{#	<div class="container">#}-->
 <!--?{#		<h1>Login</h1>#}-->
-<!--?{#		<form action="{% url 'CryptoCrackers:process_form' %}" method="post">#}-->
+<!--?{#		<form action="{% url 'MoneyMakers:process_form' %}" method="post">#}-->
 <!--?{#            {% csrf_token %}#}-->
 <!--?{#			<input type="text" id="username" name="username" placeholder="Email" required>#}-->
 <!--?{#			<input type="password" id="password" name="password" placeholder="Password" required>#}-->
@@ -42,7 +42,7 @@
             {{ form.as_p }}
             <button type="submit">Login</button>
                         <button><a href="{% provider_login_url "google" %}">Google</a></button>
-                        <button><a href={% url 'CryptoCrackers:send_forgotpassword_mail' %}>ForgotPassword</a></button>
+                        <button><a href={% url 'MoneyMakers:send_forgotpassword_mail' %}>ForgotPassword</a></button>
 {#            <button><a href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=1068557462895-p1u30p6teintg16ivbcadc8npt5n9t9q.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&scope=profile%20email&response_type=code&state=drbvD9lb1fwcoeru&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow ">Google</a></button>#}
 
 		</form>

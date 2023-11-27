@@ -57,7 +57,7 @@ def index(request):
 
 # def user_login(request):
 #     if request.session.get('user_session_id'):
-#         return HttpResponseRedirect(reverse('CryptoCrackers:index'))
+#         return HttpResponseRedirect(reverse('MoneyMakers:index'))
 #     if request.method == 'POST':
 #         form = LoginForm(request.POST)
 #         if form.is_valid():
@@ -75,9 +75,9 @@ def index(request):
 #                             # Manually set the user's ID in the session to log them in
 #                             request.session['user_session_id'] = user.id
 
-#                             return redirect('CryptoCrackers:index')
+#                             return redirect('MoneyMakers:index')
 #                             # # Redirect to the user's profile page
-#                             # return HttpResponseRedirect(reverse('CryptoCrackers:profile'))
+#                             # return HttpResponseRedirect(reverse('MoneyMakers:profile'))
 #                         else:
 #                             form.add_error(None, 'Invalid login credentials')
 #                             return redirect('/login')
@@ -96,7 +96,7 @@ def index(request):
 
 def login_user(request):
     if request.session.get('user_session_id'):
-        return HttpResponseRedirect(reverse('CryptoCrackers:index'))
+        return HttpResponseRedirect(reverse('MoneyMakers:index'))
 
     if request.method == 'POST':
         login_form = UserLoginForm(request.POST)
@@ -111,7 +111,7 @@ def login_user(request):
                 if found_user and found_user.secure_password:
                     if check_password(user_password, found_user.secure_password):
                         request.session['user_session_id'] = found_user.id
-                        return HttpResponseRedirect(reverse('CryptoCrackers:index'))
+                        return HttpResponseRedirect(reverse('MoneyMakers:index'))
                     else:
                         messages.error(request, 'Incorrect login details. Please try again.')
                 else:
@@ -134,7 +134,7 @@ def process_form(request):
         name = request.POST.get('given_name')
         email = request.POST.get('email_address')
         # Redirect to a success page or another appropriate URL
-        return redirect('CryptoCrackers:index')
+        return redirect('MoneyMakers:index')
     else:
         # Handle GET requests or other HTTP methods if needed
         return render(request, 'FrontEnd/login.html')
@@ -146,14 +146,14 @@ def handle_user_input(request):
         user_name = request.POST.get('given_name', '')
         user_email = request.POST.get('email_address', '')
         print(f"Received data - Name: {user_name}, Email: {user_email}")
-        return HttpResponseRedirect(reverse('CryptoCrackers:index'))
+        return HttpResponseRedirect(reverse('MoneyMakers:index'))
     else:
 
         return render(request, 'FrontEnd/login.html')
 
 def user_signup(request):
     if request.session.get('user_session_id'):
-        return HttpResponseRedirect(reverse('CryptoCrackers:index'))
+        return HttpResponseRedirect(reverse('MoneyMakers:index'))
     if request.method == 'POST':
         form = AccountRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -171,14 +171,14 @@ def send_forgotpassword_mail(request):
 
     # print("user: ",request.session.get('user_session_id'))
     if request.session.get('user_session_id'):
-        return HttpResponseRedirect(reverse('CryptoCrackers:index'))
+        return HttpResponseRedirect(reverse('MoneyMakers:index'))
     print("forgot pass clicked")
 
-    return HttpResponseRedirect(reverse('CryptoCrackers:forgotpassword'))
+    return HttpResponseRedirect(reverse('MoneyMakers:forgotpassword'))
 
 def forgot_password(request):
     if request.session.get('user_session_id'):
-        return HttpResponseRedirect(reverse('CryptoCrackers:index'))
+        return HttpResponseRedirect(reverse('MoneyMakers:index'))
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
         if form.is_valid():
@@ -200,7 +200,7 @@ def forgot_password(request):
                         [email],
                         fail_silently=False,
                     )
-                    return HttpResponseRedirect(reverse('CryptoCrackers:changepassword'))
+                    return HttpResponseRedirect(reverse('MoneyMakers:changepassword'))
             except AccountProfile.DoesNotExist:
                 form.add_error(None, 'Enter correct email id')
 
@@ -535,7 +535,7 @@ def display_user_wishlist(request):
 #     user.save()
 
 #     print("wishlist added", user)
-#     return redirect('CryptoCrackers:index')
+#     return redirect('MoneyMakers:index')
 
 def include_in_wishlist(request, cryptocurrency_name):
     
@@ -554,7 +554,7 @@ def include_in_wishlist(request, cryptocurrency_name):
         current_user.save()
         messages.info(request, f"{cryptocurrency_name} is already in your wishlist.")
     print("Wishlist Updated:", current_user)
-    return redirect('CryptoCrackers:index')
+    return redirect('MoneyMakers:index')
 
 
 

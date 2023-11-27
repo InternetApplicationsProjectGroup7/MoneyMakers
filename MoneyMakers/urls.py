@@ -1,8 +1,8 @@
 from django.urls import path, include, path
-from CryptoCrackers import views
+from MoneyMakers import views
 from .views import process_user_logout
 
-app_name = 'CryptoCrackers'
+app_name = 'MoneyMakers'
 
 urlpatterns = [
     path('', views.index, name='index'),

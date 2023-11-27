@@ -219,7 +219,7 @@ ol, li {
     <div class="container">
         <div class="navbar">
       <ul >
-      <li><a href="{% url 'CryptoCrackers:wishlist' %}" onclick="redirectToWishlist()">My Wishlist</a></li>
+      <li><a href="{% url 'MoneyMakers:wishlist' %}" onclick="redirectToWishlist()">My Wishlist</a></li>
       <li><a href="#">Home</a></li>
 
     <li style="color: #424961">Price :
@@ -234,11 +234,11 @@ ol, li {
   <!-- <li class="profile"><img src="../../static/person.svg" alt="Profile Image" id="profile-image"/> -->
   <!-- <div class="sub-menu-1"> -->
     <!-- <ul> -->
-            <li ><a href="{% url 'CryptoCrackers:profile' %}" style="width: 200px">{{user.given_name}}</a></li>
-            <li><a href="{% url 'CryptoCrackers:logout' %}">Logout</a></li>
+            <li ><a href="{% url 'MoneyMakers:profile' %}" style="width: 200px">{{user.given_name}}</a></li>
+            <li><a href="{% url 'MoneyMakers:logout' %}">Logout</a></li>
         {% else %}
-            <li><a href="{% url 'CryptoCrackers:login' %}">Login</a></li>
-            <li><a href="{% url 'CryptoCrackers:signup' %}">SignUp</a></li>
+            <li><a href="{% url 'MoneyMakers:login' %}">Login</a></li>
+            <li><a href="{% url 'MoneyMakers:signup' %}">SignUp</a></li>
         {% endif %}
 
     <!-- </ul> -->

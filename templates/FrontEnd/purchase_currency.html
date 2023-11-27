@@ -19,7 +19,7 @@
 
     <input type="submit" value="Purchase">
   </form>
-  <a href="{% url 'CryptoCrackers:add_money' %}">Add Money</a>
+  <a href="{% url 'MoneyMakers:add_money' %}">Add Money</a>
 
   <script>
       const cryptoChoices = JSON.parse('{{ crypto_choices_json|escapejs }}');
@@ -39,7 +39,7 @@
           // Use AJAX to submit the form data to your Django view
             const formData = new FormData(document.getElementById("purchaseForm"));
 
-            fetch("{% url 'CryptoCrackers:purchase_currency' %}", {
+            fetch("{% url 'MoneyMakers:purchase_currency' %}", {
                 method: "POST",
                 body: formData,
             })

@@ -11,7 +11,7 @@ django.setup()
 import requests
 from django.db import transaction
 # from django.db import transaction
-from CryptoCrackers.models import CryptoCurrency
+from MoneyMakers.models import CryptoCurrency
 def fetch_and_store_crypto_data():
     # API endpoint
     api_url = "https://api.coingecko.com/api/v3/coins/markets?x_cg_demo_api_key=CG-KoDWqDuHCWkxgES3WWTuZtBT&vs_currency=usd&order=market_cap_desc"
