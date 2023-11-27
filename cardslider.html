@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .card {
+  width: 300px; /* Adjust width as needed */
+  background: #fff;
+
+
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: #f0f0f0;
+}
+
+.fire-icon {
+  margin-right: 5px;
+}
+
+.card-content {
+  padding: 10px;
+}
+
+.currency {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.currency-rank {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.currency-icon {
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+  margin-right: 5px;
+}
+
+.currency-name {
+  margin-right: auto;
+}
+
+.currency-symbol {
+  background: #e0e0e0;
+  border-radius: 5px;
+  padding: 2px 6px;
+  margin-right: 10px;
+}
+
+.currency-change {
+  font-weight: bold;
+}
+
+.increase {
+  color: green;
+}
+
+body {
+
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  font-family: 'Lato', sans-serif;
+}
+.highlight-container{
+  max-width: 75rem;
+    display: flex;
+}
+
+* {
+  box-sizing: border-box;
+  scrollbar-color: transparent transparent; /* thumb and track color */
+
+}
+*::-webkit-scrollbar {
+  width: 0;
+}
+
+
+ol, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel {
+  position: relative;
+  padding-top: 30%;
+    flex-grow: 1;
+  filter: drop-shadow(0 0 10px #0003);
+  perspective: 100px;
+    border-radius: 10px;
+}
+
+.carousel__viewport {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  overflow-x: scroll;
+  counter-reset: item;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.carousel__slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  background-color: #f99;
+  counter-increment: item;
+    max-height: 200px;
+}
+
+.carousel__slide:nth-child(even) {
+  background-color: #99f;
+}
+
+.carousel__slide:before {
+  content: counter(item);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%,-40%,70px);
+  color: #fff;
+  font-size: 2em;
+}
+
+.carousel__snapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  scroll-snap-align: center;
+}
+
+
+
+
+
+
+
+.carousel__navigation {
+      position: relative; /* Change this to relative */
+    transform: translateY(-20px);
+      text-align: center;
+      margin-top: 1rem; /* Adjust the margin as needed */
+    }
+
+.carousel__navigation-list,
+.carousel__navigation-item {
+  display: inline-block;
+}
+
+.carousel__navigation-button {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background-color: black;
+  background-clip: content-box;
+  border: 0.25rem;
+  border-radius: 50%;
+  font-size: 0;
+  transition: transform 0.1s;
+}
+
+
+
+
+
+
+/* Styles for the toggle switch container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            user-select: none;
+        }
+
+        /* Styles for the switch input */
+        .toggle-input {
+            display: none;
+        }
+
+        /* Styles for the switch label (slider) */
+        .toggle-label {
+            position: relative;
+            cursor: pointer;
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        /* Styles for the switch thumb (circle) */
+        .toggle-thumb {
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 18px;
+            height: 18px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        /* Styles for the switch input when checked */
+        .toggle-input:checked + .toggle-label {
+            background-color: #4CAF50; /* Green background when checked */
+        }
+
+        /* Styles for the switch thumb when checked */
+        .toggle-input:checked + .toggle-label .toggle-thumb {
+            transform: translateX(20px); /* Move the thumb to the right when checked */
+        }
+         .toggle-input:focus + .toggle-label {
+            box-shadow: 0 0 3px 3px rgba(0, 0, 255, 0.3); /* Example: Highlight the label when clicked */
+        }
+  </style>
+</head>
+<body>
+
+<div class="highlight-container">
+<section class="carousel" aria-label="Gallery">
+  <ol class="carousel__viewport">
+    <li id="carousel__slide1"
+        tabindex="0"
+        class="carousel__slide">
+
+        <div class="card carousel__snapper">
+  <div class="card-header">
+
+    <h2><span class="fire-icon">🔥</span>Trending</h2>
+
+  </div>
+  <div class="card-content">
+    <div class="currency">
+      <span class="currency-rank">1</span>
+      <p style="font-weight:600;font-size: 16px" >
+          <a  style="text-decoration: none;color: black"><img src="{{ data.image }}" alt="{{ data.symbol }}" width="30" height="30"> <span class="dynamic-name" style="position: relative;top: -9px">{{ data.name }}  <span style="color: #789;font-weight: normal;text-transform: uppercase ">{{ data.symbol }}</span></span></a></p>
+
+    </div>
+    <div class="currency">
+      <span class="currency-rank">2</span>
+      <img src="path-to-solana-icon.png" alt="Solana" class="currency-icon">
+      <span class="currency-name">Solana</span>
+      <span class="currency-symbol">SOL</span>
+      <span class="currency-change increase">17.13%</span>
+    </div>
+    <div class="currency">
+      <span class="currency-rank">3</span>
+      <img src="path-to-vaiot-icon.png" alt="VAIOT" class="currency-icon">
+      <span class="currency-name">VAIOT</span>
+      <span class="currency-symbol">VAI</span>
+      <span class="currency-change increase">9.80%</span>
+    </div>
+  </div>
+</div>
+    </li>
+    <li id="carousel__slide2"
+        tabindex="0"
+        class="carousel__slide">
+      <div class="carousel__snapper"></div>
+
+    </li>
+
+
+  </ol>
+    <aside class="carousel__navigation">
+      <ol class="carousel__navigation-list" id="carousel-navigation-list">
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide1" class="carousel__navigation-button">Go to slide 1</a>
+        </li>
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide2" class="carousel__navigation-button">Go to slide 2</a>
+        </li>
+
+      </ol>
+    </aside>
+</section>
+    <section class="carousel" aria-label="Gallery">
+  <ol class="carousel__viewport">
+    <li id="carousel__slide1"
+        tabindex="0"
+        class="carousel__slide">
+
+        <div class="card carousel__snapper">
+  <div class="card-header">
+
+    <h2><span class="fire-icon">🔥</span>Trending</h2>
+
+  </div>
+  <div class="card-content">
+    <div class="currency">
+      <span class="currency-rank">1</span>
+      <p style="font-weight:600;font-size: 16px" >
+          <a  style="text-decoration: none;color: black"><img src="{{ data.image }}" alt="{{ data.symbol }}" width="30" height="30"> <span class="dynamic-name" style="position: relative;top: -9px">{{ data.name }}  <span style="color: #789;font-weight: normal;text-transform: uppercase ">{{ data.symbol }}</span></span></a></p>
+
+    </div>
+    <div class="currency">
+      <span class="currency-rank">2</span>
+      <img src="path-to-solana-icon.png" alt="Solana" class="currency-icon">
+      <span class="currency-name">Solana</span>
+      <span class="currency-symbol">SOL</span>
+      <span class="currency-change increase">17.13%</span>
+    </div>
+    <div class="currency">
+      <span class="currency-rank">3</span>
+      <img src="path-to-vaiot-icon.png" alt="VAIOT" class="currency-icon">
+      <span class="currency-name">VAIOT</span>
+      <span class="currency-symbol">VAI</span>
+      <span class="currency-change increase">9.80%</span>
+    </div>
+  </div>
+</div>
+    </li>
+    <li id="carousel__slide2"
+        tabindex="0"
+        class="carousel__slide">
+      <div class="carousel__snapper"></div>
+
+    </li>
+
+
+  </ol>
+    <aside class="carousel__navigation">
+      <ol class="carousel__navigation-list" id="carousel-navigation-list">
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide1" class="carousel__navigation-button">Go to slide 1</a>
+        </li>
+        <li class="carousel__navigation-item">
+          <a href="#carousel__slide2" class="carousel__navigation-button">Go to slide 2</a>
+        </li>
+
+      </ol>
+    </aside>
+</section>
+</div>
+<div class="toggle-container">
+        <input type="checkbox" class="toggle-input" id="toggle-switch">
+        <label class="toggle-label" for="toggle-switch">
+            <div class="toggle-thumb"></div>
+        </label>
+        <span style="margin-left: 10px;">Toggle Switch</span>
+    </div>
+<script>
+{#var toggleInput = document.getElementById('toggle-switch');#}
+{##}
+{#    var isChecked = false#}
+{#        // Add a click event listener to the label#}
+{#        toggleInput.addEventListener('click',()=>{#}
+{#            toggleInput.checked = !toggleInput.checked;#}
+{#            console.log("checked: ",toggleInput.checked)#}
+            {#isChecked = true;#}
+{#        })#}
+    </script>
+
+</body>
+</html>

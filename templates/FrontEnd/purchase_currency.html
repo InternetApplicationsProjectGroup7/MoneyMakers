@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purchase Currency</title>
+</head>
+
+<body>
+  <h2>Purchase Currency</h2>
+  <p>Available Balance: ${{ balance }}</p>
+  <form method="post" id="purchaseForm">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="button" onclick="calculateTotal()">Calculate Total</button>
+    <p>Total Amount: $<span id="totalAmount">0.00</span></p>
+
+    <input type="submit" value="Purchase">
+  </form>
+  <a href="{% url 'CryptoCrackers:add_money' %}">Add Money</a>
+
+  <script>
+      const cryptoChoices = JSON.parse('{{ crypto_choices_json|escapejs }}');
+
+      function calculateTotal() {
+            const selectedCrypto = document.getElementById('id_cryptocurrency');
+            const selectedIndex = selectedCrypto.selectedIndex;
+            const cryptoPrice = parseFloat(cryptoChoices[selectedIndex-1].price);
+            const quantity = parseFloat(document.getElementById('id_quantity').value);
+            const totalAmount = cryptoPrice * quantity;
+            document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+      }
+
+      document.getElementById("purchaseForm").addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the default form submission
+
+          // Use AJAX to submit the form data to your Django view
+            const formData = new FormData(document.getElementById("purchaseForm"));
+
+            fetch("{% url 'CryptoCrackers:purchase_currency' %}", {
+                method: "POST",
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the message in a popup
+                if (data.success) {
+                    alert("Purchase successful.");
+                    // Optionally, reset the form
+                    document.getElementById("purchaseForm").reset();
+                } else {
+                    alert("Insufficient balance to make the purchase.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle error if needed
+            });
+        });
+  </script>
+</body>
+
+</html>

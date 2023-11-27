@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Search</title>
+    <link rel="stylesheet" href="../../static/css/news.css">
+    <link rel="stylesheet" href="../../static/css/dashboard.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{#    <script src="../../static/script.js" defer></script>#}
+    <style>
+        .card {
+  width: 300px; /* Adjust width as needed */
+  background: #fff;
+
+
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: #f0f0f0;
+}
+
+.fire-icon {
+  margin-right: 5px;
+}
+
+.card-content {
+  padding: 10px;
+}
+
+.currency {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.currency-rank {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.currency-icon {
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+  margin-right: 5px;
+}
+
+.currency-name {
+  margin-right: auto;
+}
+
+.currency-symbol {
+  background: #e0e0e0;
+  border-radius: 5px;
+  padding: 2px 6px;
+  margin-right: 10px;
+}
+
+.currency-change {
+
+    margin-left: auto;
+  font-weight: bold;
+}
+
+.increase {
+  color: green;
+}
+
+body {
+
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  font-family: 'Lato', sans-serif;
+}
+.highlight-container{
+  max-width: 75rem;
+    display: none;
+
+}
+.highlight-container.active{
+    display: block;
+}
+* {
+  box-sizing: border-box;
+  scrollbar-color: transparent transparent; /* thumb and track color */
+
+}
+*::-webkit-scrollbar {
+  width: 0;
+}
+
+
+ol, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.carousel_container{
+    display: flex;
+}
+.carousel {
+  position: relative;
+  padding-top: 26%;
+    flex-grow: 1;
+  filter: drop-shadow(0 0 10px #0003);
+  perspective: 100px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.carousel__viewport {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  overflow-x: scroll;
+  counter-reset: item;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.carousel__slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  background-color: #f99;
+  counter-increment: item;
+    max-height: 200px;
+}
+
+.carousel__slide:nth-child(even) {
+  background-color: #99f;
+}
+
+.carousel__slide:before {
+  content: counter(item);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%,-40%,70px);
+  color: #fff;
+  font-size: 2em;
+}
+
+.carousel__snapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  scroll-snap-align: center;
+}
+
+/* Styles for the toggle switch container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            user-select: none;
+        }
+
+        /* Styles for the switch input */
+        .toggle-input {
+            display: none;
+        }
+
+        /* Styles for the switch label (slider) */
+        .toggle-label {
+            position: relative;
+            cursor: pointer;
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        /* Styles for the switch thumb (circle) */
+        .toggle-thumb {
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 18px;
+            height: 18px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        /* Styles for the switch input when checked */
+        .toggle-input:checked + .toggle-label {
+            background-color: #4CAF50; /* Green background when checked */
+        }
+
+        /* Styles for the switch thumb when checked */
+        .toggle-input:checked + .toggle-label .toggle-thumb {
+            transform: translateX(20px); /* Move the thumb to the right when checked */
+        }
+         .toggle-input:focus + .toggle-label {
+            box-shadow: 0 0 3px 3px rgba(0, 0, 255, 0.3); /* Example: Highlight the label when clicked */
+        }
+         .header{
+              text-align: center;
+    display: flex;
+    color: black;
+    margin: 20px 0;
+         }
+  </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="navbar">
+      <ul >
+      <li><a href="{% url 'CryptoCrackers:wishlist' %}" onclick="redirectToWishlist()">My Wishlist</a></li>
+      <li><a href="#">Home</a></li>
+
+    <li style="color: #424961">Price :
+      <select id="currencySelector">
+          <option value="usd" selected>USD</option>
+          <option value="cad">CAD</option>
+          <option value="eur">EUR</option>
+      </select>
+    </li>
+    {% if user_log %}
+    <!-- <li > Hello {{ user.username }}</li> -->
+  <!-- <li class="profile"><img src="../../static/person.svg" alt="Profile Image" id="profile-image"/> -->
+  <!-- <div class="sub-menu-1"> -->
+    <!-- <ul> -->
+            <li ><a href="{% url 'CryptoCrackers:profile' %}" style="width: 200px">{{user.given_name}}</a></li>
+            <li><a href="{% url 'CryptoCrackers:logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'CryptoCrackers:login' %}">Login</a></li>
+            <li><a href="{% url 'CryptoCrackers:signup' %}">SignUp</a></li>
+        {% endif %}
+
+    <!-- </ul> -->
+  <!-- </div> -->
+  </li>
+
+</ul>
+
+</div>
+
+<div class="highlight-container" id="highlight_section">
+<h2>Highlight Section</h2>
+<section class="carousel_container">
+<section class="carousel" aria-label="Gallery">
+  <ol class="carousel__viewport">
+    <li id="carousel__slide1"
+        tabindex="0"
+        class="carousel__slide">
+
+        <div class="card carousel__snapper">
+  <div class="card-header">
+
+
+      <h2 style="margin: 0"><span class="fire-icon">🔥</span>Trending </h2>
+
+  </div>
+  <div class="card-content">
+      <ol>
+      {% with break_at_index=4 %}
+  {% for data in coins %}
+    {% if forloop.counter < break_at_index %}
+      <li style="display: flex">
+            <p class="currency-rank">{{ forloop.counter }}</p>
+          <p style="font-weight:600;font-size: 16px" >
+
+          <a href="/coins/{{data.name  }}" style="text-decoration: none;color: black"><img src="{{ data.image }}" alt="{{ data.symbol }}" width="30" height="30"> <span class="dynamic-name" style="position: relative;top: -9px">{{ data.name }}  <span style="color: #789;font-weight: normal;text-transform: uppercase ">{{ data.symbol }}</span></span></a></p>
+          {% if data.price_change_percentage_24h > 0 %}
+           <p class="currency-change" style="color: green">+ {{data.price_change_percentage_24h}}%</p>
+        {% else %}
+           <p class="currency-change" style="color: red">{{data.price_change_percentage_24h}}%</p>
+         {% endif %}
+
+      </li>
+
+
+    {% endif %}
+  {% endfor %}
+{% endwith %}
+
+      </ol>
+  </div>
+</div>
+    </li>
+    <li id="carousel__slide1"
+        tabindex="0"
+        class="carousel__slide">
+
+        <div class="card carousel__snapper">
+  <div class="card-header">
+
+    <h2 style="margin: 0"><span class="fire-icon">🕕 </span>Recently Added</h2>
+
+
+  </div>
+  <div class="card-content">
+      <ol>
+      {% with break_at_index=4 %}
+  {% for data in coins %}
+    {% if forloop.counter < break_at_index %}
+      <li style="display: flex">
+            <p class="currency-rank">{{ forloop.counter }}</p>
+          <p style="font-weight:600;font-size: 16px" >
+
+          <a href="/coins/{{data.name  }}" style="text-decoration: none;color: black"><img src="{{ data.image }}" alt="{{ data.symbol }}" width="30" height="30"> <span class="dynamic-name" style="position: relative;top: -9px">{{ data.name }}  <span style="color: #789;font-weight: normal;text-transform: uppercase ">{{ data.symbol }}</span></span></a></p>
+          {% if data.price_change_percentage_24h > 0 %}
+           <p class="currency-change" style="color: green">+ {{data.price_change_percentage_24h}}%</p>
+        {% else %}
+           <p class="currency-change" style="color: red">{{data.price_change_percentage_24h}}%</p>
+         {% endif %}
+
+      </li>
+
+
+    {% endif %}
+  {% endfor %}
+{% endwith %}
+
+      </ol>
+  </div>
+</div>
+    </li>
+
+  </ol>
+
+</section>
+    <section class="carousel" aria-label="Gallery">
+  <ol class="carousel__viewport">
+    <li id="carousel__slide1"
+        tabindex="0"
+        class="carousel__slide">
+
+        <div class="card carousel__snapper">
+  <div class="card-header">
+
+
+<h2 style="margin: 0"> <span style="color: green;">▲ </span>24 hour Gain</h2>
+  </div>
+  <div class="card-content">
+      <ol>
+      {% with break_at_index=4 %}
+  {% for data in coins|slice:"3:" %}
+    {% if forloop.counter < break_at_index %}
+      <li style="display: flex">
+            <p class="currency-rank">{{ forloop.counter }}</p>
+          <p style="font-weight:600;font-size: 16px" >
+
+          <a href="/coins/{{data.name  }}" style="text-decoration: none;color: black"><img src="{{ data.image }}" alt="{{ data.symbol }}" width="30" height="30"> <span class="dynamic-name" style="position: relative;top: -9px">{{ data.name }}  <span style="color: #789;font-weight: normal;text-transform: uppercase ">{{ data.symbol }}</span></span></a></p>
+          {% if data.price_change_percentage_24h > 0 %}
+           <p class="currency-change" style="color: green">+ {{data.price_change_percentage_24h}}%</p>
+        {% else %}
+           <p class="currency-change" style="color: red">{{data.price_change_percentage_24h}}%</p>
+         {% endif %}
+
+      </li>
+
+
+    {% endif %}
+  {% endfor %}
+{% endwith %}
+
+      </ol>
+  </div>
+</div>
+    </li>
+    <li id="carousel__slide1"
+        tabindex="0"
+        class="carousel__slide">
+
+        <div class="card carousel__snapper">
+  <div class="card-header">
+
+    <h2 style="margin: 0"><span class="fire-icon">🔻 </span>24 hour loss </h2>
+
+  </div>
+  <div class="card-content">
+      <ol>
+      {% with break_at_index=4 %}
+  {% for data in coins|slice:"6:" %}
+    {% if forloop.counter < break_at_index %}
+      <li style="display: flex">
+            <p class="currency-rank">{{ forloop.counter }}</p>
+          <p style="font-weight:600;font-size: 16px" >
+
+          <a href="/coins/{{data.name  }}" style="text-decoration: none;color: black"><img src="{{ data.image }}" alt="{{ data.symbol }}" width="30" height="30"> <span class="dynamic-name" style="position: relative;top: -9px">{{ data.name }}  <span style="color: #789;font-weight: normal;text-transform: uppercase ">{{ data.symbol }}</span></span></a></p>
+          {% if data.price_change_percentage_24h > 0 %}
+           <p class="currency-change" style="color: green">+ {{data.price_change_percentage_24h}}%</p>
+        {% else %}
+           <p class="currency-change" style="color: red">{{data.price_change_percentage_24h}}%</p>
+         {% endif %}
+
+      </li>
+
+
+    {% endif %}
+  {% endfor %}
+{% endwith %}
+
+      </ol>
+  </div>
+</div>
+    </li>
+
+  </ol>
+
+</section>
+<section class="carousel" aria-label="Gallery">
+  <ol class="carousel__viewport">
+    <li id="carousel__slide1"
+        tabindex="0"
+        class="carousel__slide">
+
+        <div class="card carousel__snapper">
+  <div class="card-header">
+
+
+<h2 style="margin: 0"><span class="fire-icon">💰</span>Top Market Cap </h2>
+  </div>
+  <div class="card-content">
+      <ol>
+      {% with break_at_index=4 %}
+  {% for data in coins|slice:"7:" %}
+    {% if forloop.counter < break_at_index %}
+      <li style="display: flex">
+            <p class="currency-rank">{{ forloop.counter }}</p>
+          <p style="font-weight:600;font-size: 16px" >
+
+          <a href="/coins/{{data.name  }}" style="text-decoration: none;color: black"><img src="{{ data.image }}" alt="{{ data.symbol }}" width="30" height="30"> <span class="dynamic-name" style="position: relative;top: -9px">{{ data.name }}  <span style="color: #789;font-weight: normal;text-transform: uppercase ">{{ data.symbol }}</span></span></a></p>
+          {% if data.price_change_percentage_24h > 0 %}
+           <p class="currency-change" style="color: green">+ {{data.price_change_percentage_24h}}%</p>
+        {% else %}
+           <p class="currency-change" style="color: red">{{data.price_change_percentage_24h}}%</p>
+         {% endif %}
+
+      </li>
+
+
+    {% endif %}
+  {% endfor %}
+{% endwith %}
+
+      </ol>
+  </div>
+</div>
+    </li>
+
+
+  </ol>
+
+</section>
+</section>
+</div>
+        <header  style="align-items: center;justify-content: center;" class="header">
+            <h1 style="position: absolute; margin: 20px">Cryptocurrencies</h1>
+
+            <div style="margin-left: auto" class="toggle-container">
+                <span>Highlights</span>
+        <input type="checkbox" class="toggle-input" id="toggle-switch">
+        <label class="toggle-label" for="toggle-switch">
+            <div class="toggle-thumb"></div>
+        </label>
+
+    </div>
+        </header>
+
+
+        <table id="crypto-table">
+  <thead>
+    <tr>
+       <!-- Empty header for the wishlist column -->
+      <th>#</th>
+        <th></th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Change (24H)</th>
+      <th>Market Cap</th>
+      <th>Volume (24h)</th>
+      <th>Circ. Supply</th>
+    </tr>
+  </thead>
+
+            <tbody>
+                {% for data in coins %}
+                    <tr>
+                    <td>{{ forloop.counter }}</td>
+                    {% if data.name in wish_list %}
+{#                        <td><a href="/add_to_wishlist/{{ data.name }}"><button class="wishlist-btn" onclick="addToWishlist(this)">★</button></a></td>#}
+                        <td><a href="/add_to_wishlist/{{ data.name }}"><img src="../../static/icon2.png" style="width: 20px ; height: 20px"/> </a></td>
+                    {% else %}
+{#                        <td><a href="/add_to_wishlist/{{ data.name }}"><button class="wishlist-btn" onclick="addToWishlist(this)">☆</button></a></td>#}
+                        <td><a href="/add_to_wishlist/{{ data.name }}"><img src="../../static/icon1.png" style="width: 20px ; height: 20px"/> </a></td>
+                 {% endif %}
+
+
+      <td style="font-weight:600;font-size: 16px" >
+          <a href="/coins/{{ data.name }}" style="text-decoration: none;color: black"><img src="{{ data.image }}" alt="{{ data.symbol }}" width="30" height="30"> <span class="dynamic-name" style="position: relative;top: -9px">{{ data.name }}  <span style="color: #789;font-weight: normal;text-transform: uppercase ">{{ data.symbol }}</span></span></a></td>
+      <td class="price price-usd">$ {{ data.current_price }}</td>
+      <td class="price price-cad" style="display:none;">CAD {{ data.current_price_cad }}</td>
+      <td class="price price-eur" style="display:none;">€ {{ data.current_price_eur }}</td>
+       {% if data.price_change_percentage_24h > 0 %}
+           <td style="color: green">+ {{data.price_change_percentage_24h}}%</td>
+        {% else %}
+           <td style="color: red">{{data.price_change_percentage_24h}}%</td>
+         {% endif %}
+
+      <td>{{ data.market_cap }}</td>
+      <td>{{ data.total_volume }}</td>
+      <td><span style="color: #789;font-weight: normal;text-transform: uppercase ">{{ data.symbol }}</span> {{ data.circulating_supply }}</td>
+    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+ 
+    </div>
+    <script>
+        $(document).ready(function () {
+                $('#currencySelector').change(function () {
+               var selectedCurrency = $(this).val().toLowerCase();
+                console.log(selectedCurrency)
+                $('.price').hide();
+
+                $('.price-' + selectedCurrency).show();
+            });
+
+
+            // Add click events for profile options
+            $("#profile-link").click(function () {
+                alert("My Profile clicked");
+            });
+
+            $("#dashboard-link").click(function () {
+                alert("Dashboard clicked");
+            });
+
+            $("#login-link").click(function () {
+                window.location.href = "login"
+            });
+            const profileSection = document.querySelector(".profile-section");
+    const dropdownContent = document.querySelector("#dropdown");
+
+    // Show dropdown content on hover
+    profileSection.addEventListener("mouseenter", function () {
+        dropdownContent.style.display = "block";
+    });
+
+    // Hide dropdown content when mouse leaves the profile section
+    profileSection.addEventListener("mouseleave", function () {
+        dropdownContent.style.display = "none";
+    });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+    const newsContainer = document.getElementById('newsContainer');
+    const prevButton = document.getElementById('prevBtn');
+    const nextButton = document.getElementById('nextBtn');
+    const newsCards = document.querySelectorAll('.news-card');
+    const numberOfCards = 3; // Number of news cards to display at once
+    let currentCard = 0;
+
+    function showNewsCards(start) {
+        for (let i = 0; i < newsCards.length; i++) {
+            if (i >= start && i < start + numberOfCards) {
+                newsCards[i].style.display = 'block';
+            } else {
+                newsCards[i].style.display = 'none';
+            }
+        }
+    }
+
+    // Initially show the first set of news cards
+    showNewsCards(currentCard);
+    prevButton.addEventListener('click', function() {
+        if (currentCard > 0) {
+            currentCard -= 1;
+            showNewsCards(currentCard);
+        }
+    });
+
+    nextButton.addEventListener('click', function() {
+        if (currentCard + numberOfCards < newsCards.length) {
+            currentCard += 1;
+            showNewsCards(currentCard);
+        }
+    });
+});
+const wishlistButtons = document.querySelectorAll('.wishlist-btn');
+
+// Add click event listener to each button
+wishlistButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    // Toggle the 'active' class on click
+    button.classList.toggle('active');
+    // Change the star character if needed
+    if (button.classList.contains('active')) {
+      button.textContent = '★'; // Filled star character
+    } else {
+      button.textContent = '☆'; // Empty star character
+    }
+  });
+});
+var toggleBtn = document.getElementById('toggle-switch');
+var highlightSection = document.getElementById("highlight_section")
+        // Add a click event listener
+        toggleBtn.addEventListener('click', function() {
+            // Check if the 'highlight' class is present
+            if (highlightSection.classList.contains('active')) {
+                // If present, remove the class
+                highlightSection.classList.remove('active');
+                console.log('Class removed');
+            } else {
+                // If not present, add the class
+                highlightSection.classList.add('active');
+                console.log('Class added');
+            }
+        });
+    </script>
+</body>
+</html>

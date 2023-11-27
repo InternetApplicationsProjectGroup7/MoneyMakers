@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Navigation Bar</title>
+    <style>
+
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Profile section styles */
+.profile-section {
+  float: right;
+  margin-right: 10px;
+  /* position: relative; */
+}
+
+.profile-section img {
+  width: 40px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 10px;
+  cursor: pointer;
+}
+
+/* Dropdown content styles */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #a71212;
+  z-index: 1;
+  right: 0;
+}
+
+.dropdown-content a {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  color: white;
+}
+
+/* Show dropdown on hover */
+.profile-section:hover .dropdown-content {
+    padding-right: 12px;
+  display: block;
+}
+.dropdown-content a {
+            clear: both;
+            margin-right: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Products</a>
+    <a href="#">Contact</a>
+    <div class="profile-section">
+        <img src="../../static/person.svg" alt="Profile Image" id="profile-image">
+        <div class="dropdown-content" id="dropdown">
+            <a id="login-link">Login / SignUp</a>
+            <a id="profile-link" style="display: none;">My Profile</a>
+            <a id="dashboard-link" style="display: none;">Dashboard</a>
+        </div>
+    </div>
+</div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const isLoggedIn = false;
+    
+            // Show/hide options based on login status
+            if (isLoggedIn) {
+                $("#login-link").hide();
+                $("#profile-link, #dashboard-link").show();
+            } else {
+                $("#profile-link, #dashboard-link").hide();
+            }
+    
+            // Add click events for profile options
+            $("#profile-link").click(function () {
+                alert("My Profile clicked");
+            });
+    
+            $("#dashboard-link").click(function () {
+                alert("Dashboard clicked");
+            });
+    
+            $("#login-link").click(function () {
+                window.location.href = "login.html"
+            });
+        });
+    </script>
+</body>
+</html>    

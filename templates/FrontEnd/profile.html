@@ -1,0 +1,518 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>My Profile</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            .profile-container {
+                display: flex;
+                align-items: flex-start;
+            }
+
+            .sidebar {
+                width: 30%;
+                padding: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .content {
+                width: 40%;
+                padding: 20px;
+                background-color: #fff;
+            }
+
+            .sidebar ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .sidebar li {
+                margin-bottom: 20px;
+            }
+
+            .sidebar a {
+                text-decoration: none;
+                color: #333;
+                display: block;
+                padding: 5px 0;
+            }
+
+            .sidebar a:hover {
+                background-color: darkgrey;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-group label {
+                display: block;
+                font-weight: bold;
+            }
+
+            .form-group input[type="text"],
+            .form-group input[type="email"],
+            .form-group input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .save-button {
+                background-color: #007bff;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .delete-button {
+                background-color: red;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .save-button:hover {
+                background-color: #0056b3;
+            }
+
+            .delete-button:hover {
+                background-color: darkred;
+            }
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                width: 80%;
+                max-width: 400px;
+            }
+
+            li {
+                background-color: #fff;
+                margin: 10px 0;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            img {
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+            }
+
+            a {
+                text-decoration: none;
+                color: #3498db;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            .wishlist-icon {
+                margin-top: 20px;
+            }
+
+            .wishlist-icon img {
+                width: 60px;
+                height: 60px;}
+
+
+
+        </style>
+
+        <script>
+
+            window.addEventListener('load', function(event) {
+                event.preventDefault();
+
+                var sections = ["profile-details", "account-security","wishlist","process_add_money","purchase-currency","sell-currency","user_purchases"];
+                var sectionId = "{{ id|escapejs }}";
+                {#var sectionId = {{ id }}#}
+
+
+                sections.forEach((i)=>{
+                    element = document.getElementById(i);
+                    console.log("element: ",element)
+                    element.style.display = "none";
+                })
+
+                document.getElementById(sectionId).style.display = 'block';
+                {#window.location.href = "{% url 'CryptoCrackers:add_money' %}"#}
+
+                // Use the |escapejs filter to escape special characters
+                {#console.log("User:", email);#}
+                console.log("Window is ready",email);
+
+            });
+            // Function to toggle the visibility of sections
+
+            function accountSecurity() {
+                var sections = ["profile-details", "account-security","wishlist","process_add_money","purchase-currency","sell-currency","user_purchases"];
+
+
+                sections.forEach((index)=>{
+                    document.getElementById(index).style.display = "none"
+
+                })
+
+
+
+                document.getElementById('account-security').style.display = "block"
+            }
+
+
+
+            function confirmDelete(){
+                var confirmation = confirm("Are you sure you want to delete your account? This action is irreversible.");
+                if (confirmation)
+                    document.getElementById('delete-account-form').submit();
+
+            }
+        function showSection(sectionId) {
+            var sections = ["profile-details", "account-security", "wishlist", "process_add_money", "purchase-currency","sell-currency", "user_purchases"];
+
+            sections.forEach((index) => {
+                document.getElementById(index).style.display = "none";
+            });
+
+            document.getElementById(sectionId).style.display = "block";
+        }
+
+        </script>
+    </head>
+    <body>
+    <header>
+        <!-- Your website header content here -->
+    </header>
+    <nav>
+        <!-- Your website navigation menu here -->
+    </nav>
+    <main>
+        <div class="profile-container">
+            <div class="sidebar">
+                <ul>
+                    <li><a href="{% url 'CryptoCrackers:profile' %}" >Profile Details</a></li>
+                    <li><a onclick="accountSecurity()" >Account Security</a></li>
+                    <li><a href="{% url 'CryptoCrackers:wishlist' %}" >Wishlist</a></li>
+                    <li><a href="{% url 'CryptoCrackers:add_money' %}" >Add Money to Wallet</a></li>
+                    <li><a href="{% url 'CryptoCrackers:purchase_currency' %}" >Purchase Crypto Currency</a></li>
+                    <li><a href="{% url 'CryptoCrackers:sell_currency' %}" >Sell Crypto Currency</a></li>
+                    <!-- <li><a href="{% url 'CryptoCrackers:user_purchases' %}">View Purchases</a></li> -->
+    <li><a href="{% url 'CryptoCrackers:user_purchases' %}" onclick="showSection('user_purchases')">View Purchases</a></li>
+
+                </ul>
+            </div>
+            <div class="content">
+
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li
+                    {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+
+                <div id="profile-details" style="display: block;">
+                    <h1> Hello {{ user.given_name }}</h1>
+                    <h1>Profile Details</h1>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="avatar">Choose Avatar:</label>
+
+                            <input type="text" id="avatar" name="avatar">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" value="{{ user.email }}" id="email" name="email">
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="birthdate">Birthdate:</label>
+                            <input type="text" value="{{ user.date_of_birth }}" id="birthdate" name="birthdate">
+                        </div> -->
+                        <div class="form-group">
+                            <label for="firstname">First Name:</label>
+                            <input type="text" value="{{ user.given_name }}" id="firstname" name="firstname">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Last Name:</label>
+                            <input type="text" value="{{ user.family_name }}" id="lastname" name="lastname">
+                        </div>
+                        <button class="save-button" type="submit">Save</button>
+                    </form>
+                </div>
+
+                <div id="account-security" style="display: none;">
+                    <h1>Account Security</h1>
+                    <form action="accountsecurity/" method="post">
+                        {% csrf_token %}
+                        <div class="frm-group">
+                            <label for="current-password">Current Password:</label>
+                            <input type="password" id="current-password" name="current-password">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password">New Password:</label>
+                            <input type="password" id="new-password" name="new-password">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm New Password:</label>
+                            <input type="password" id="confirm-password" name="confirm-password">
+                        </div>
+                        <button class="save-button" type="submit">Change Password</button>
+                        <p>{{ error }}</p>
+                    </form>
+
+
+                    <h2>Delete Account</h2>
+                    <p>Deleting your account is irreversible and will remove all your data.</p>
+                    <form action="delete_account/" method="post">
+                        {% csrf_token %}
+                        <button class="delete-button" onclick="confirmDelete()" type="submit">Delete Account</button>
+                    </form>
+                </div>
+
+                <div id="wishlist" style="display: none;">
+                    <h1>Wishlist</h1>
+                    <ul>
+                        {% for wishlist_item in wish_list %}
+                            <li>
+                                <a href="{% url 'CryptoCrackers:dynamic_crypto' coin_name=wishlist_item %}">
+                                    <span>{{ wishlist_item }}</span>
+                                </a>
+                                <a href="remove_to_wishlist/{{ wishlist_item }}">
+                                    <img src="../../static/icon2.png" alt="Remove" title="Remove from Wishlist">
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="process_add_money" style=" display: none;">
+                    <h1>Add money to Wallet</h1>
+                    <p>Available Balance: ${{ balance }}</p>
+                    <form method="post" id="addmoney">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button class="save-button" type="submit">Add Money</button>
+                    </form>
+                </div>
+
+                <div id="purchase-currency" style="display: none;">
+                    <h1>Purchase Crypto Currency</h1>
+                    <p >Available Balance: <span id="balance">${{ balance }} </span></p>
+    {#                {% if messages %}#}
+    {#                    <ul class="messages">#}
+    {#                        {% for message in messages %}#}
+    {#                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+    {#                        {% endfor %}#}
+    {#                    </ul>#}
+    {#                {% endif %}#}
+                    <form  method="post" id="purchaseForm">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button class="save-button" type="button" onchange="calculateTotal()">Calculate Total</button>
+                        <p>Total Amount: $<span id="totalAmount">0.00</span></p>
+                        <p>Remaing balance in your wallet will be : $<span id="remainigBalance">0.00</span></p>
+
+    {#                    <button class="save-button" type="submit">Purchase</button>#}
+    {#                    {% if user.id_image %}#}
+
+                        <button class="save-button" type="submit">Purchase</button>
+    {#                    {% else %}#}
+    {#                        <button class="save-button" type="button" disabled>Purchase</button>#}
+    {#                        <p style="color: red;">Please upload a valid ID image before purchasing cryptocurrency.</p>#}
+    {##}
+    {#                    {% endif %}#}
+                    </form>
+                </div>
+
+
+            <div id="sell-currency" style="display: none;">
+                <h1>Sell Crypto Currency</h1>
+                <p>Available Balance: <span id="balance">${{ balance }} </span></p>
+                {# {% if messages %}#}
+                {# <ul class="messages">#}
+                    {# {% for message in messages %}#}
+                    {# <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>#}
+                    {# {% endfor %}#}
+                    {# </ul>#}
+                {# {% endif %}#}
+                <form method="post" id="sellForm">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="save-button" type="button" onclick="calculateTotal1()">Calculate Total</button>
+                    <p style="font-weight: bold;"> you have Total  ::<span id="Total_asset">0.00</span> : <span id="Total_name"> </span></p> 
+                    <p>Total Amount: $<span id="totalAmount">0.00</span></p>
+                    <p>Remaing balance in your wallet will be : $<span id="remainigBalance">0.00</span></p>
+            
+                    {# <button class="save-button" type="submit">Purchase</button>#}
+                    {# {% if user.id_image %}#}
+            
+                    <button class="save-button" type="submit">Purchase</button>
+                    {# {% else %}#}
+                    {# <button class="save-button" type="button" disabled>Purchase</button>#}
+                    {# <p style="color: red;">Please upload a valid ID image before purchasing cryptocurrency.</p>#}
+                    {##}
+                    {# {% endif %}#}
+                </form>
+            </div>
+            <div id="user_purchases" style="display: none;">
+                <h1>User Purchases</h1>
+                <ul>
+                    {% for purchase in user_purchases %}
+                    <li>
+                        <span>{{ purchase.action_type }}:-{{ purchase.digital_currency.name }} - Quantity: {{ purchase.volume }} - {{purchase.total_value}} </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+                <script>
+                    
+
+                    function calculateTotal() {
+                            console.log('calculateTotal() called');
+                            const form = document.getElementById('purchaseForm');
+                            const selectedCrypto = form.elements['digital_currency'];
+                            const quantityInput = form.elements['volume'];
+                            
+                            if (selectedCrypto && quantityInput) {
+                                const selectedIndex = selectedCrypto.selectedIndex;
+
+                                if (selectedIndex !== -1) {
+                                    const cryptoPrice = parseFloat(cryptoChoices[selectedIndex - 1].price);
+                                    const quantity = parseFloat(quantityInput.value);
+
+                                    console.log('cryptoPrice:', cryptoPrice);
+                                    console.log('quantity:', quantity);
+                                    var balanceElement = document.getElementById('balance');
+
+                                    // Extract the text content from this element
+                                    var balanceText = balanceElement.innerText;
+
+                                    // Since the balance might be formatted as a currency, remove the currency symbol if needed
+                                    var balance = parseFloat(balanceText.replace('$', '').trim());
+                                    if (!isNaN(quantity) && quantity > 0) {
+                                        const totalAmount = cryptoPrice * quantity;
+                                        const RemainBalance = balance-totalAmount;
+
+                                        document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+                                        document.getElementById('remainigBalance').innerText = RemainBalance.toFixed(2);
+
+                                    } else {
+                                        alert('Please enter a valid quantity.');
+                                    }
+                                } else {
+                                    alert('Please select a cryptocurrency.');
+                                }
+                            }
+                        }
+
+                        const cryptoChoices = JSON.parse('{{ crypto_choices_json|escapejs }}');
+                        // const chs = JSON.parse('{{ crypto_chs_json|escapejs }}');
+                    function calculateTotal1() {
+                            console.log('calculateTotal1() called');
+                            const form = document.getElementById('purchaseForm');
+                            const selectedCrypto = form.elements['digital_currency'];
+                            const quantityInput = form.elements['volume'];
+                            const data= JSON.parse('{{ crypto_holdings|escapejs }}');
+                            const chs = JSON.parse('{{ crypto_chs_json|escapejs }}')
+                            const selectedIndex = selectedCrypto.selectedIndex;
+                    
+                            const selectedCryptoName = chs[selectedIndex].name;
+                            const holdings = data[selectedCryptoName];
+                            console.log("Holdings for selected crypto:", selectedCrypto);
+                            const cryptoPrice = parseFloat(chs[selectedIndex].price);
+                            const quantity = parseFloat(quantityInput.value);
+                            document.getElementById('Total_name').innerText = selectedCryptoName
+                            document.getElementById('Total_asset').innerText = data[selectedCryptoName]
+                            console.log('quantity:', cryptoPrice);
+                        }
+                    // document.getElementById("id_digital_currency").addEventListener("change", calculateTotal1);
+
+
+
+                    document.getElementById("purchaseForm").addEventListener("submit", function (event) {
+                        //   event.preventDefault(); // Prevent the default form submission
+
+                        // Use AJAX to submit the form data to your Django view
+                            // const formData = new FormData(document.getElementById("purchaseForm"));
+
+                            // fetch("{% url 'CryptoCrackers:purchase_currency' %}", {
+                            //     method: "POST",
+                            //     body: formData,
+                            // })
+                            // .then(response => response.json())
+                            // .then(data => {
+                            //     // Display the message in a popup
+                            //     if (data.success) {
+                            //         alert("Purchase successful.");
+                                    // Optionally, reset the form
+                                    // document.getElementById("purchaseForm").reset();
+                                // } else {
+                                    // alert("Insufficient balance to make the purchase.");
+                                // }
+                            // })
+                            // .catch(error => {
+                                // console.error('Error:', error);
+                                // Handle error if needed
+                            });
+                    // });
+
+                    document.getElementById("addmoney").addEventListener("submit", function (event) {
+                        event.preventDefault(); // Prevent the default form submission
+
+                        // Use AJAX to submit the form data to your Django view
+                        const formData = new FormData(document.getElementById("addmoney"));
+
+                        fetch("{% url 'CryptoCrackers:add_money' %}", {
+                            method: "POST",
+                            body: formData,
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                            // Display the message in a popup
+
+                            if (data.success) {
+                                    alert("Money added successfully");
+                                    // Optionally, reset the form
+                                    document.getElementById("addmoney").reset();
+                                } else {
+                                    alert("Error adding money");
+                                }
+
+                            // Optionally, reset the form
+                            document.getElementById("addmoney").reset();
+                            })
+                            .catch(error => {
+                            console.error('Error:', error);
+                            // Handle error if needed
+                            });
+                    });
+                   
+                   </script>
+
+        </div>
+        </div>
+
+    </main>
+    <footer>
+
+    </footer>
+    </body>
+    </html>

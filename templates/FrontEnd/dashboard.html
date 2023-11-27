@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../../static/css/dashboard.css">
+</head>
+<body>
+    <table id="crypto-table">
+  <thead>
+    <tr>
+      <th></th> <!-- Empty header for the wishlist column -->
+      <th>#</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Change (24H)</th>
+      <th>Market Cap</th>
+      <th>Volume (24h)</th>
+      <th>Circ. Supply</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><button class="wishlist-btn" onclick="addToWishlist(this)">☆</button></td>
+      <td>1</td>
+      <td style="font-weight:600;font-size: 16px" >Bitcoin  <span style="color: #789;font-weight: normal">BTC</span></td>
+      <td>$37,127</td>
+      <td>+0.61%</td>
+      <td>$725.75B</td>
+      <td>$4.01B</td>
+      <td>BTC 19.54M</td>
+    </tr>
+    <tr>
+      <td><button class="wishlist-btn" onclick="addToWishlist(this)">☆</button></td>
+      <td>1</td>
+      <td>Bitcoin sol</td>
+      <td>$37,127</td>
+      <td>+0.61%</td>
+      <td>$725.75B</td>
+      <td>$4.01B</td>
+      <td>BTC 19.54M</td>
+    </tr>
+    <!-- More rows for other cryptocurrencies -->
+  </tbody>
+</table>
+
+<script>
+    const wishlistButtons = document.querySelectorAll('.wishlist-btn');
+
+// Add click event listener to each button
+wishlistButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    // Toggle the 'active' class on click
+    button.classList.toggle('active');
+    // Change the star character if needed
+    if (button.classList.contains('active')) {
+      button.textContent = '★'; // Filled star character
+    } else {
+      button.textContent = '☆'; // Empty star character
+    }
+  });
+});
+
+
+</script>
+</body>
+
+</html>

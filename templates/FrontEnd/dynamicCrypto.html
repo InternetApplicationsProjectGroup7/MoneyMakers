@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Individual coins</title>
+    <link rel="stylesheet" href="../../static/css/dynamic.css">
+</head>
+<body>
+<h2 class="coin_title">
+        <img src="{{ coin.image }}" alt="{{ coin.symbol }}" width="40" height="40">&nbsp;{{ coin.name }} {{ coin.symbol }}
+        </h2>
+<img src="{{ data_uri }}" alt="Price Chart">
+
+<button>Trade {{ coin.name }}</button>
+<div class="market-stats">
+    <h1 class="market_Header">Market</h1>
+    <div class="stats-container">
+        <div class="stat">
+            <h2>MARKET CAP</h2>
+            <p>USD${{ coin.market_cap }}</p>
+        </div>
+        <div class="stat">
+            <h2>TOTAL VOLUME</h2>
+            <p>USD${{ coin.total_volume }}</p>
+        </div>
+        <div class="stat">
+            <h2>CIRCULATING SUPPLY</h2>
+            <p>{{ coin.circulating_supply }}{{ coin.symbol }}</p>
+        </div>
+        <div class="stat">
+            <h2>TOTAL SUPPLY</h2>
+            <p>{{ coin.total_supply }}{{ coin.symbol }}</p>
+        </div>
+        <div class="stat">
+            <h2>ALL TIME HIGH</h2>
+            <p>USD${{ coin.ath_change_percentage }}</p>
+        </div>
+        <div class="stat">
+            <h2>TYPICAL HOLD TIME</h2>
+            <p>100 days</p>
+        </div>
+        <div class="stat">
+            <h2>POPULARITY</h2>
+            <p>#{{ coin.market_cap_rank }}</p>
+        </div>
+        <div class="stat">
+            <h2>ALL TIME HIGH (24H)</h2>
+            <p>{{ coin.price_change_24h }}%</p>
+        </div>
+        <div class="stat">
+            <h2>PRICE CHANGE (24H)</h2>
+            <p>{{ coin.market_cap_change_percentage_24h }}%</p>
+        </div>
+        <div class="stat">
+            <h2>PRICE CHANGE (ALL TIME)</h2>
+            <p>{{ coin.atl_change_percentage }}</p>
+        </div>
+        <div class="stat">
+            <h2>ALL TIME HIGH DATE</h2>
+            <p>{{ coin.ath_date }}</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

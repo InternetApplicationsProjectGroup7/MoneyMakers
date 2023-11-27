@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Search</title>
+    <link rel="stylesheet" href="../../static/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{#    <script src="../../static/script.js" defer></script>#}
+</head>
+<body>
+
+    <div class="container">
+        <div class="navbar">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Products</a>
+            <a href="#">Contact</a>
+        <select id="currencySelector">
+            <option value="usd" selected>USD</option>
+            <option value="cad">CAD</option>
+            <option value="eur">EUR</option>
+        </select>
+
+        <div class="profile-section">
+    <div class="profile-section" style="position: relative;">
+    <img src="../../static/person.svg" alt="Profile Image" id="profile-image">
+    <div class="dropdown-content" id="dropdown" style="display: none; position: absolute; background-color: #a71212; z-index: 1; right: 0; top: 100%; width: 200px">
+        <a  href="{% url 'CryptoCrackers:profile' %}" style="width: 200px">{{user.username}}</a>
+    </div>
+z
+    </div>
+        <header>
+            <h1>Coin Search</h1>
+        </header>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Coin</th>
+                    <th class="price price-usd">Price (USD)</th>
+                    <th class="price price-cad" style="display:none;">Price (CAD)</th>
+                    <th class="price price-eur" style="display:none;">Price (EUR)</th>
+                    <th>24h</th>
+                    <th>Volume</th>
+                    <th>Mkt Cap</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in coins %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                        <img src="{{ data.image }}" alt="{{ data.symbol }}" width="30" height="30">
+                        {{ data.symbol }}
+                    </td>
+                    <td class="price price-usd">{{ data.current_price }}</td>
+                    <td class="price price-cad" style="display:none;">{{ data.current_price_cad }}</td>
+                    <td class="price price-eur" style="display:none;">{{ data.current_price_eur }}</td>
+                    <td>{{ data.price_change_percentage_24h }}</td>
+                    <td>{{ data.total_volume }}</td>
+                    <td>{{ data.market_cap }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function () {
+                $('#currencySelector').change(function () {
+               var selectedCurrency = $(this).val().toLowerCase();
+                console.log(selectedCurrency)
+                $('.price').hide();
+
+                $('.price-' + selectedCurrency).show();
+            });
+
+            const isLoggedIn = false;
+
+            // Show/hide options based on login status
+            if (isLoggedIn) {
+                $("#login-link").hide();
+                $("#profile-link, #dashboard-link").show();
+            } else {
+                $("#profile-link, #dashboard-link").hide();
+            }
+
+            // Add click events for profile options
+            $("#profile-link").click(function () {
+                alert("My Profile clicked");
+            });
+
+            $("#dashboard-link").click(function () {
+                alert("Dashboard clicked");
+            });
+
+            $("#login-link").click(function () {
+                window.location.href = "login"
+            });
+            const profileSection = document.querySelector(".profile-section");
+    const dropdownContent = document.querySelector("#dropdown");
+
+    // Show dropdown content on hover
+    profileSection.addEventListener("mouseenter", function () {
+        dropdownContent.style.display = "block";
+    });
+
+    // Hide dropdown content when mouse leaves the profile section
+    profileSection.addEventListener("mouseleave", function () {
+        dropdownContent.style.display = "none";
+    });
+        });
+    </script>
+
+</body>
+</html>

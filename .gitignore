@@ -1,0 +1,64 @@
+# Ignore compiled Python files
+*.pyc
+__pycache__/*
+
+# Ignore the virtual environment
+venv/
+env/
+
+# Ignore local settings file
+local_settings.py
+
+# Ignore database file
+db.sqlite3
+
+# Ignore media and static files (usually handled by a web server or storage service)
+media/
+static/
+
+# Ignore environment-specific settings
+*.env
+*.pyc
+
+# Ignore logs
+logs/
+
+# Ignore configuration files
+*.log
+*.ini
+
+# Ignore the secret key file
+*.key
+
+# Ignore development and local files
+*.local
+*.db
+*.sqlite
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+*.iml
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore compiled JavaScript
+*.min.js
+
+# Ignore compiled CSS
+*.min.css
+
+# Ignore compiled images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+
+# Ignore database migrations
+/migrations/
+
+# Ignore Docker Compose files
+docker-compose.yml
+docker-compose.override.yml

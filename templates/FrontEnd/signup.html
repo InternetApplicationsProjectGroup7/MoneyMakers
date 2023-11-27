@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Signup Page</title>
+	<link rel="stylesheet" href="../../static/css/style.css">
+
+</head>
+<body>
+	<div class="container">
+		<h1>Create Account</h1>
+		<form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+{#			<label for="imageDropdown">Select an Image:</label>#}
+{#    <select id="imageDropdown" name="imageDropdown">#}
+{#        <option value="image1"> <!-- You can set a unique value for each option -->#}
+{#            <img src="https://cdn.iconscout.com/icon/free/png-512/free-avatar-370-456322.png?f=webp&w=512" alt="Image 1">#}
+{#        </option>#}
+{#        <option value="image2">#}
+{#            <img src="https://cdn.iconscout.com/icon/free/png-512/free-avatar-370-456322.png?f=webp&w=512" alt="Image 2">#}
+{#        </option>#}
+{#        <!-- Add more options as needed -->#}
+{#    </select>#}
+
+            <button type="submit">Register</button>
+		</form>
+
+        <div class="signup">
+			<p>Already have an account? <a href="http://localhost:8000/login">Login</a></p>
+		</div>
+		<div class="error">
+		</div>
+	</div>
+</body>
+</html>

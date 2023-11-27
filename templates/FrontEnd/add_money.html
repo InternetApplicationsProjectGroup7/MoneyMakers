@@ -1,0 +1,51 @@
+<!-- add_money.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Money</title>
+</head>
+
+<body>
+  <h2>Add Money</h2>
+  <p>Available Balance: ${{ balance }}</p>
+  <form method="post" id="addMoneyForm">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Add Money">
+  </form>
+  <a href="{% url 'CryptoCrackers:purchase_currency' %}">Purchase Currency</a>
+
+  <script>
+    document.getElementById("addMoneyForm").addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Use AJAX to submit the form data to your Django view
+      const formData = new FormData(document.getElementById("addMoneyForm"));
+
+      fetch("{% url 'CryptoCrackers:add_money' %}", {
+        method: "POST",
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Display the message in a popup
+          var message = data.success ? "Money added successfully." : "Error adding money.";
+          alert(message);
+
+          // Optionally, reset the form
+          document.getElementById("addMoneyForm").reset();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Handle error if needed
+        });
+    });
+  </script>
+</body>
+
+</html>
