@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coin Search</title>
-    <link rel="stylesheet" href="../../static/css/news.css">
     <link rel="stylesheet" href="../../static/css/dashboard.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {#    <script src="../../static/script.js" defer></script>#}
@@ -486,6 +485,7 @@ ol, li {
       <th>Market Cap</th>
       <th>Volume (24h)</th>
       <th>Circ. Supply</th>
+      
     </tr>
   </thead>
 
@@ -559,40 +559,7 @@ ol, li {
         dropdownContent.style.display = "none";
     });
         });
-        document.addEventListener('DOMContentLoaded', function() {
-    const newsContainer = document.getElementById('newsContainer');
-    const prevButton = document.getElementById('prevBtn');
-    const nextButton = document.getElementById('nextBtn');
-    const newsCards = document.querySelectorAll('.news-card');
-    const numberOfCards = 3; // Number of news cards to display at once
-    let currentCard = 0;
-
-    function showNewsCards(start) {
-        for (let i = 0; i < newsCards.length; i++) {
-            if (i >= start && i < start + numberOfCards) {
-                newsCards[i].style.display = 'block';
-            } else {
-                newsCards[i].style.display = 'none';
-            }
-        }
-    }
-
-    // Initially show the first set of news cards
-    showNewsCards(currentCard);
-    prevButton.addEventListener('click', function() {
-        if (currentCard > 0) {
-            currentCard -= 1;
-            showNewsCards(currentCard);
-        }
-    });
-
-    nextButton.addEventListener('click', function() {
-        if (currentCard + numberOfCards < newsCards.length) {
-            currentCard += 1;
-            showNewsCards(currentCard);
-        }
-    });
-});
+ 
 const wishlistButtons = document.querySelectorAll('.wishlist-btn');
 
 // Add click event listener to each button
