@@ -150,14 +150,3 @@ STATICFILES_DIRS = [
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
-
-# SOCIALACCOUNT_PROVIDERS = {
-#     "google": {
-#         "SCOPE": [
-#             'profile',
-#             'email',],
-#         "AUTH PARAMS":{
-#             "access_type": "online",
-#         }
-#     }
-# }

@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+
+    color: white;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    /*background-color: #333;*/
+    padding: 20px;
+    border-radius: 10px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/*table {*/
+/*    width: 100%;*/
+/*    border-collapse: collapse;*/
+/*}*/
+
+/*th, td {*/
+/*    padding: 10px;*/
+/*    border: 1px solid #444;*/
+/*    text-align: right;*/
+/*}*/
+
+/*th {*/
+/*    text-align: left;*/
+
+/*}*/
+
+/*td, th {*/
+/*    padding: 15px;*/
+/*}*/
+/*td{*/
+/*    text-align: center;*/
+/*}*/
+
+
+
+.navbar {
+    /*background-color: #333;*/
+    overflow: hidden;
+  }
+
+  .navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  .navbar a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  /* Profile section styles */
+  .profile-section {
+    float: right;
+    margin-right: 10px;
+    position: relative; /* Add relative positioning */
+}
+
+.profile-section img {
+    width: 40px;
+    height: 25px;
+    border-radius: 50%;
+    margin: 10px;
+    cursor: pointer;
+}
+
+  /* Dropdown content styles */
+  .dropdown-content {
+    display: block;
+    position: absolute;
+    background-color: #a71212;
+    z-index: 1;
+    right: 0;
+    top: 100%; /* Position below the profile icon */
+}
+
+/* Show dropdown on hover */
+
+
+  .dropdown-content a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    color: black;
+  }
+
+   /*Show dropdown on hover*/
+
+  .profile-section:hover .dropdown-content {
+      padding-right: 12px;
+    display: block;
+  }
+
+

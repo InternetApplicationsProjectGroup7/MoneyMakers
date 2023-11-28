@@ -326,9 +326,9 @@
                     <form  method="post" id="purchaseForm">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button class="save-button" type="button" onchange="calculateTotal()">Calculate Total</button>
+                        <button class="save-button" type="button" onclick="calculateTotal()">Calculate Total</button>
                         <p>Total Amount: $<span id="totalAmount">0.00</span></p>
-                        <p>Remaing balance in your wallet will be : $<span id="remainigBalance">0.00</span></p>
+                        <p>Future Balance in your wallet will be : $<span id="remainigBalance">0.00</span></p>
 
     {#                    <button class="save-button" type="submit">Purchase</button>#}
     {#                    {% if user.id_image %}#}
@@ -358,8 +358,8 @@
                     {{ form.as_p }}
                     <button class="save-button" type="button" onclick="calculateTotal1()">Calculate Total</button>
                     <p style="font-weight: bold;"> you have Total  ::<span id="Total_asset">0.00</span> : <span id="Total_name"> </span></p> 
-                    <p>Total Amount: $<span id="totalAmount">0.00</span></p>
-                    <p>Remaing balance in your wallet will be : $<span id="remainigBalance">0.00</span></p>
+                    <p>Total Amount: $<span id="totalAmount1">0.00</span></p>
+                    <p>Remaing balance in your wallet will be : $<span id="remainigBalance1">0.00</span></p>
             
                     {# <button class="save-button" type="submit">Purchase</button>#}
                     {# {% if user.id_image %}#}
@@ -384,65 +384,62 @@
             </div>
                 <script>
                     
+                    const cryptoChoices = JSON.parse('{{ crypto_choices_json|escapejs }}');
 
                     function calculateTotal() {
-                            console.log('calculateTotal() called');
                             const form = document.getElementById('purchaseForm');
-                            const selectedCrypto = form.elements['digital_currency'];
-                            const quantityInput = form.elements['volume'];
-                            
-                            if (selectedCrypto && quantityInput) {
-                                const selectedIndex = selectedCrypto.selectedIndex;
+                            const selectedCryptoIndex = form.elements['digital_currency'].selectedIndex;
+                            const quantity = parseFloat(form.elements['volume'].value);
 
-                                if (selectedIndex !== -1) {
-                                    const cryptoPrice = parseFloat(cryptoChoices[selectedIndex - 1].price);
-                                    const quantity = parseFloat(quantityInput.value);
-
-                                    console.log('cryptoPrice:', cryptoPrice);
-                                    console.log('quantity:', quantity);
-                                    var balanceElement = document.getElementById('balance');
-
-                                    // Extract the text content from this element
-                                    var balanceText = balanceElement.innerText;
-
-                                    // Since the balance might be formatted as a currency, remove the currency symbol if needed
-                                    var balance = parseFloat(balanceText.replace('$', '').trim());
-                                    if (!isNaN(quantity) && quantity > 0) {
-                                        const totalAmount = cryptoPrice * quantity;
-                                        const RemainBalance = balance-totalAmount;
-
-                                        document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
-                                        document.getElementById('remainigBalance').innerText = RemainBalance.toFixed(2);
-
-                                    } else {
-                                        alert('Please enter a valid quantity.');
-                                    }
-                                } else {
-                                    alert('Please select a cryptocurrency.');
-                                }
+                            if (selectedCryptoIndex === -1) {
+                                alert('Please select a cryptocurrency.');
+                                return;
                             }
+
+                            if (isNaN(quantity) || quantity <= 0) {
+                                alert('Please enter a valid quantity.');
+                                return;
+                            }
+
+                            const cryptoPrice = parseFloat(cryptoChoices[selectedCryptoIndex - 1].price);
+                            const totalAmount = cryptoPrice * quantity;
+                            const balanceElement = document.getElementById('balance');
+                            const balance = parseFloat(balanceElement.innerText.replace('$', '').trim());
+                            const remainingBalance = balance - totalAmount;
+
+                            document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+                            document.getElementById('remainigBalance').innerText = remainingBalance.toFixed(2);
                         }
 
-                        const cryptoChoices = JSON.parse('{{ crypto_choices_json|escapejs }}');
-                        // const chs = JSON.parse('{{ crypto_chs_json|escapejs }}');
+
+
+
+                   
                     function calculateTotal1() {
-                            console.log('calculateTotal1() called');
-                            const form = document.getElementById('purchaseForm');
-                            const selectedCrypto = form.elements['digital_currency'];
-                            const quantityInput = form.elements['volume'];
-                            const data= JSON.parse('{{ crypto_holdings|escapejs }}');
-                            const chs = JSON.parse('{{ crypto_chs_json|escapejs }}')
-                            const selectedIndex = selectedCrypto.selectedIndex;
-                    
-                            const selectedCryptoName = chs[selectedIndex].name;
-                            const holdings = data[selectedCryptoName];
-                            console.log("Holdings for selected crypto:", selectedCrypto);
-                            const cryptoPrice = parseFloat(chs[selectedIndex].price);
-                            const quantity = parseFloat(quantityInput.value);
-                            document.getElementById('Total_name').innerText = selectedCryptoName
-                            document.getElementById('Total_asset').innerText = data[selectedCryptoName]
-                            console.log('quantity:', cryptoPrice);
+                            const form = document.getElementById('sellForm');
+                            const selectedCryptoIndex = form.elements['digital_currency'].selectedIndex;
+                            const quantity = parseFloat(form.elements['volume'].value);
+                            const data = JSON.parse('{{ crypto_holdings|escapejs }}');
+                            const chs = JSON.parse('{{ crypto_chs_json|escapejs }}');
+                            const selectedCryptoName = chs[selectedCryptoIndex - 1].name;
+                            const cryptoPrice = parseFloat(chs[selectedCryptoIndex - 1].price);
+                            console.log( form.elements['digital_currency']);
+                            if (isNaN(quantity) || quantity <= 0) {
+                                alert('Please enter a valid quantity.');
+                                return;
+                            }
+
+                            const totalAmount = cryptoPrice * quantity;
+                            const balanceElement = document.getElementById('balance');
+                            const balance = parseFloat(balanceElement.innerText.replace('$', '').trim());
+                            const remainingBalance = balance + totalAmount;
+
+                            document.getElementById('Total_name').innerText = selectedCryptoName;
+                            document.getElementById('Total_asset').innerText = data[selectedCryptoName];
+                            document.getElementById('totalAmount1').innerText = totalAmount.toFixed(2);
+                            document.getElementById('remainigBalance1').innerText = remainingBalance.toFixed(2);
                         }
+
                     // document.getElementById("id_digital_currency").addEventListener("change", calculateTotal1);
 
 
@@ -472,7 +469,7 @@
                                 // console.error('Error:', error);
                                 // Handle error if needed
                             });
-                    // });
+                    
 
                     document.getElementById("addmoney").addEventListener("submit", function (event) {
                         event.preventDefault(); // Prevent the default form submission

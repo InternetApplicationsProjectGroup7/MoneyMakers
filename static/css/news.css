@@ -1,0 +1,55 @@
+.news-section {
+    margin-top: 30px;
+}
+
+.news-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.news-card {
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.9); /* Adjust the alpha (fourth value) to set the transparency */
+    color: #000; /* Set text color to white */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); /* Add a subtle text shadow for better readability */
+}
+
+
+
+.news-card img {
+    width: 100%;
+    height: 200px; /* Set the desired height for the images */
+    border-radius: 8px;
+    object-fit: cover; /* Maintain image aspect ratio and cover the entire space */
+}
+
+.news-card h3 {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.news-card p {
+    font-size: 16px;
+}
+
+.news-card a {
+    display: block;
+    text-align: right;
+    margin-top: 10px;
+}
+
+/* Style for the buttons */
+.news-cards button {
+    background: none; /* Remove default button background */
+    border: none; /* Remove default button border */
+    padding: 0; /* Remove default button padding */
+    cursor: pointer; /* Add cursor style */
+    /* Add any additional specific styles for the buttons */
+}
+

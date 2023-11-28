@@ -1,5 +1,4 @@
 from django.contrib import admin
-# from .models import UserDetails, CryptoCurrency, Wallet, Purchase, Transaction
 from .models import AccountProfile, CryptoCurrency, UserAccount, CryptoTransaction, AccountActivity
 
 admin.site.register(AccountProfile)

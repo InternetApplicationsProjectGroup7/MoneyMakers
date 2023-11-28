@@ -1,12 +1,10 @@
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render, redirect, get_object_or_404
-# from .forms import LoginForm, RegisterForm, ForgotPasswordForm, PurchaseForm, AddMoneyForm,ChangePasswordForm
 from .forms import UserLoginForm, AccountRegistrationForm,AssetSellForm, PasswordResetForm, AssetExchangeForm, FundsAdditionForm,UpdatePasswordForm
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
-# from .models import UserDetails, CryptoCurrency, Wallet, Purchase, Transaction
 from .models import AccountProfile, CryptoCurrency, UserAccount, CryptoTransaction, AccountActivity
 import matplotlib as mpl
 import random
@@ -210,47 +208,6 @@ def change_password(request):
     return render(request, 'FrontEnd/changepassword.html',{"form":form})
 
 
-#
-# def create_transaction(request):
-#     if request.method == 'POST':
-#         form = PurchaseForm(request.POST)
-#         if form.is_valid():
-#             # Don't save the form yet because we haven't completed the payment
-#             transaction = form.save(commit=False)
-#
-#             # Get the current price of the selected cryptocurrency in CAD
-#             current_price_cad = transaction.currency.current_price_cad
-#
-#             # Calculate the total price
-#             total_price = transaction.amount * current_price_cad
-#
-#             # You may want to store the transaction in the session or a temporary place
-#             request.session['transaction_data'] = {
-#                 'currency_id': transaction.currency.id,
-#                 'amount': str(transaction.amount),
-#                 'total_price': str(total_price)
-#             }
-#
-#             # Redirect to the payment page
-#             return redirect('/payment/')
-#     else:
-#         form = PurchaseForm()
-#     return render(request, 'FrontEnd/purchase_form.html', {'form': form})
-
-#
-# def purchase_crypto(request):
-#     # Retrieve the transaction data from the session
-#     transaction_data = request.session.get('transaction_data', {})
-#
-#     # In a real application, you should clear the session data after use
-#     # request.session.pop('transaction_data', None)
-#
-#     context = {
-#         'total_price': transaction_data.get('total_price'),
-#         'currency_id': transaction_data.get('currency_id'),
-#         'amount': transaction_data.get('amount'),
-#     }
-#     return render(request, 'FrontEnd/payment.html', context)
 
 
 
@@ -286,20 +243,13 @@ def dynamic_Crypto(request, coin_name):
     y_max = base_value * (1 + 0.2)
     ax.set_ylim([y_min, y_max])
 
-    # Hide the y-axis labels and spines
-    # ax.get_yaxis().set_visible(False)
-    # for spine in ax.spines.values():
-    #     spine.set_visible(False)
-
-    # Hide the y-axis
+   
     ax.get_yaxis().set_visible(False)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.spines['left'].set_visible(False)
     ax.spines['bottom'].set_visible(True)
-    # ax.spines['bottom'].set_linewidth(0)
-    # current_price = prices[-1]
-    # price_change =
+    
     percentage_change = .15 * 100
     # Use ax.text() to add annotations to the plot
     ax.text(0.03, 0.97, f'USD${coin.current_price:,.2f}',
@@ -386,24 +336,6 @@ def handle_user_profile(request):
         return render(request, 'FrontEnd/profile.html', {'user': current_user, 'wish_list': user_wishlist, 'id': "profile-details"})
 
 
-
-# def passwd_change(request):
-#     value = request.session.get('user_session_id')
-#     user = UserDetails.objects.get(id=value)
-
-#     currentPassword = request.POST['current-password']
-#     if check_password(currentPassword, user.password):
-#         if request.POST['new-password'] == request.POST['confirm-password']:
-#             user.password = make_password(request.POST['new-password'])
-#             user.save()
-#             messages.success(request, "Password changed successfully.")
-#             return redirect('/userprofile')
-#         else:
-#             messages.error(request, "New password and confirm password do not match.")
-#             return redirect('/userprofile')
-#     else:
-#         messages.error(request, "Current password is incorrect")
-#         return redirect('/userprofile')
 def update_user_password(request):
     # Retrieve user's session ID
     session_id = request.session.get('user_session_id')
@@ -454,20 +386,6 @@ def process_user_logout(request):
     return redirect('/')
 
 
-
-# def wishlist(request):
-#     value = request.session.get('user_session_id')
-#     if not value:
-#         messages.info(request, "Please log in to view your wishlist.")
-#         # Redirect to the login page
-#         return redirect('/login/')
-#     user = UserDetails.objects.get(id=value)
-#     wish_list = user.wishlist
-#     print(wish_list)
-
-#     return render(request, 'FrontEnd/profile.html',{"user": user, 'wish_list': wish_list, 'id': "wishlist"})
-#     # return render(request, 'FrontEnd/wishlist.html', {"user": user, 'wish_list': wish_list})
-
 def display_user_wishlist(request):
     user_session_id = request.session.get('user_session_id')
     if not user_session_id:
@@ -483,18 +401,6 @@ def display_user_wishlist(request):
         'id': "wishlist"
     })
 
-# def add_to_wishlist(request, coin_name):
-#     value = request.session.get('user_session_id')
-#     if not value:
-#         # Redirect to login or handle the case where the user is not authenticated
-#         return redirect('/login/')
-#     user = UserDetails.objects.get(id=value)
-#     coin = get_object_or_404(CryptoCurrency, name=coin_name)
-#     user.wishlist.append(coin.name)
-#     user.save()
-
-#     print("wishlist added", user)
-#     return redirect('MoneyMakers:index')
 
 def include_in_wishlist(request, cryptocurrency_name):
     
@@ -532,8 +438,6 @@ def process_add_money(request):
         money_addition_form = FundsAdditionForm(request.POST)
         if money_addition_form.is_valid():
             deposit_amount = money_addition_form.cleaned_data['transaction_amount']
-            # Uncomment the following line if you decide to use different currencies
-            # deposit_currency = money_addition_form.cleaned_data['currency']
 
             # Update wallet balance
             user_wallet.account_balance += deposit_amount
@@ -566,73 +470,6 @@ def process_add_money(request):
         'id': "process_add_money"
     })
 
-
-
-# def purchase_currency(request):
-    # user_id = request.session.get('user_session_id')
-    # if not user_id:
-    #     # Redirect to login or handle the case where the user is not authenticated
-    #     return redirect('/login/')
-
-    # user_wallet, created = Wallet.objects.get_or_create(user_id=user_id)
-
-    # if request.method == 'POST':
-    #     form = PurchaseForm(user_id, request.POST)
-
-    #     # user_details = UserDetails.objects.get(id=user_id)
-    #     # if not user_details.id_image:
-    #     #     messages.error(request, "Please upload a valid ID image before purchasing cryptocurrency.")
-    #     #     return JsonResponse({'success': False, 'error': 'ID image not uploaded'})
-
-    #     if form.is_valid():
-    #         cryptocurrency = form.cleaned_data['cryptocurrency']
-    #         quantity = form.cleaned_data['quantity']
-    #         total_amount = cryptocurrency.current_price_cad * quantity
-
-    #         if user_wallet.balance >= total_amount:
-    #             user_wallet.balance -= total_amount
-
-    #             Purchase.objects.create(
-    #                 user_id=user_id,
-    #                 cryptocurrency=cryptocurrency,
-    #                 quantity=quantity,
-    #                 total_amount=total_amount,
-    #             )
-    #             user = UserDetails.objects.get(id=user_id)
-
-    #             # Get the current cryptocurrencies of the user
-    #             cryptocurrencies = user.cryptocurrencies
-
-    #             # If the user has already bought this cryptocurrency, add the quantity to the existing quantity
-    #             if cryptocurrency.name in cryptocurrencies:
-    #                 cryptocurrencies[cryptocurrency.name] += int(quantity)
-    #             else:
-    #                 # If the user has not bought this cryptocurrency before, add it to the dictionary
-    #                 cryptocurrencies[cryptocurrency.name] = int(quantity)
-
-    #             # Save the updated cryptocurrencies dictionary
-    #             user.cryptocurrencies = cryptocurrencies
-    #             user_wallet.save()
-    #             user.save()
-
-    #             return JsonResponse({'success': True, 'total_amount': total_amount})
-    #         else:
-    #             return JsonResponse({'success': False, 'error': 'Insufficient balance'})
-    #     else:
-    #         # Form is not valid, return JsonResponse with error details
-    #         return JsonResponse({'success': False, 'error': 'Invalid form data'})
-
-    # else:
-    #     form = PurchaseForm(user_id)
-
-    #     # Fetch the cryptocurrency choices and pass them to the template as a JSON string
-    #     crypto_choices = [{'id': crypto.id, 'name': crypto.name, 'price': str(crypto.current_price_cad)} for crypto in
-    #                       CryptoCurrency.objects.all()]
-    #     crypto_choices_json = json.dumps(crypto_choices, cls=DjangoJSONEncoder)
-
-    #     return render(request, 'FrontEnd/profile.html',
-    #                   {'form': form, 'balance': user_wallet.balance, 'crypto_choices_json': crypto_choices_json,
-    #                    'id': "purchase-currency"})
 def execute_currency_purchase(request):
     # Authenticate user
     current_user_id = request.session.get('user_session_id')
@@ -707,6 +544,7 @@ def execute_currency_purchase(request):
             'form': purchase_form, 
             'balance': user_wallet.account_balance, 
             'crypto_choices_json': crypto_options_json,
+            'type':'buy',
             'id': "purchase-currency"
         })
 
@@ -774,16 +612,12 @@ def execute_currency_sell(request):
         # Handle GET request
         purchase_form = AssetSellForm(current_user_id)
         user_profile = AccountProfile.objects.get(id=current_user_id)
-        # Prepare cryptocurrency choices for the template
         user_crypto_holdings = user_profile.digital_assets
-        # Prepare cryptocurrency choices for the template
         crypto_ids = list(user_crypto_holdings.keys())
         crypto_options = [{'id': crypto.id, 'name': crypto.name, 'price': str(crypto.current_price_cad)} 
                           for crypto in CryptoCurrency.objects.filter(name__in=crypto_ids)]
         crypto_options_json = json.dumps(crypto_options, cls=DjangoJSONEncoder)
-        crypto_holdings_json = json.dumps(user_crypto_holdings)
-        # crypto_chs_json = json.dumps(user_crypto_holdings)
-                # Render the purchase page
+        crypto_holdings_json = json.dumps(user_crypto_holdings, cls=DjangoJSONEncoder)
         return render(request, 'FrontEnd/profile.html', {
             'form': purchase_form, 
             'balance': user_wallet.account_balance, 

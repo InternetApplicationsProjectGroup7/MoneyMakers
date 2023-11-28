@@ -1,0 +1,45 @@
+/* Dynamic Crypto Css */
+.coin_title{
+    color: black;
+    margin: 0 auto;
+    padding: 20px;
+    font-size: 50px;
+}
+.market_Header{
+
+    margin-bottom: 30px;
+}
+.market-stats {
+    /*max-width: 800px;*/
+    color: black;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+}
+
+.stat h2 {
+    font-size: 0.9em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.stat p {
+    font-size: 1.1em;
+    color: #000;
+    font-weight: bold;
+}
+
+

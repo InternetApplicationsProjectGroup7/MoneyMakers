@@ -1,0 +1,120 @@
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    /*background-color: #333;*/
+    padding: 20px;
+    border-radius: 10px;
+
+}
+
+
+#crypto-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#crypto-table th,
+#crypto-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  color: #424961;
+}
+
+#crypto-table th {
+  background-color: #eef4fa;
+}
+
+#crypto-table tr:hover {
+  background-color: #e6f1ff;
+}
+
+.wishlist-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.wishlist-btn.active {
+  color: red; /* Or any color to indicate that the item is in the wishlist */
+
+}
+.dynamic-name:hover{
+color: blue;
+}
+
+
+.navbar {
+    background-color: #eef4fa;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+    color: #fff;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin: 15px;
+    padding: 15px;
+    position: relative;
+}
+
+.sub-menu-1 {
+    box-shadow: 0 10px 10px #ebebeb;
+    position: absolute;
+    top: 100%;
+    right: -15px;
+    background: #eef4fa;
+    padding: 15px;
+    z-index: 999;
+    display: none;
+}
+
+.navbar ul li:hover .sub-menu-1 {
+    display: block;
+}
+
+.sub-menu-1 ul {
+    display: block;
+    margin: 10px;
+    padding: 0;
+}
+
+.sub-menu-1 ul li {
+    width: 150px;
+    padding: 10px;
+    border-bottom: 1px dotted #fff;
+    background: #eef4fa; /* Match the navbar color */
+    border-radius: 0;
+    text-align: center;
+}
+
+.navbar ul li:last-child {
+    margin-left: auto; /* Move the last li to the right */
+}
+
+.navbar select {
+  background-color: #eef4fa;
+  color: #424961;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.navbar::after {
+    position: absolute;
+    right: 10px; /* Adjust as needed */
+    color: #424961; /* Same color as the select text */
+}
+
+.navbar select:focus {
+  outline: none;
+}
+
+
