@@ -140,3 +140,9 @@ class AssetSellForm(forms.ModelForm):
             cleaned_data['total_value'] = total_price
 
         return cleaned_data
+    
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = AccountProfile
+        fields  = ['email_address']

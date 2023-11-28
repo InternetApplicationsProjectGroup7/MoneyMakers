@@ -19,6 +19,9 @@ import django.core.mail.backends.smtp
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = BASE_DIR / "templates"
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -48,6 +51,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     'MoneyMakers.apps.MoneyMakersConfig',
+    'allauth',
+    'allauth.account'
 
 ]
 
@@ -59,7 +64,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "allauth.account.middleware.AccountMiddleware"
+    "allauth.account.middleware.AccountMiddleware"
 ]
 
 ROOT_URLCONF = "InternetAppProject.urls"

@@ -1,7 +1,7 @@
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserLoginForm, AccountRegistrationForm,AssetSellForm, PasswordResetForm, AssetExchangeForm, FundsAdditionForm,UpdatePasswordForm
+from .forms import UserLoginForm, AccountRegistrationForm,UserProfileForm,AssetSellForm, PasswordResetForm, AssetExchangeForm, FundsAdditionForm,UpdatePasswordForm
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
@@ -42,7 +42,7 @@ def index(request):
     # print(coin_list)
     
 
-    print("user details are: ", user_logged_in)
+    
     context = {
         'user': current_user,
         'coins': top_cryptocurrencies,
@@ -70,13 +70,18 @@ def login_user(request):
                         request.session['user_session_id'] = found_user.id
                         return HttpResponseRedirect(reverse('MoneyMakers:index'))
                     else:
-                        messages.error(request, 'Incorrect login details. Please try again.')
+                        empty_form = UserLoginForm()
+                        context ={'form': empty_form}
+                        return render(request, 'FrontEnd/login.html', context)
                 else:
-                    messages.error(request, 'Incorrext Password Or Username')
+                    empty_form = UserLoginForm()
+                    context ={'form': empty_form}
+                    return render(request, 'FrontEnd/login.html', context)
 
             except AccountProfile.DoesNotExist:
-                messages.error(request, 'No account found with the provided email.')
-                return render(request, 'login')
+                empty_form = UserLoginForm()
+                context ={'form': empty_form}
+                return render(request, 'FrontEnd/login.html', context)
 
     else:
         empty_form = UserLoginForm()
@@ -116,6 +121,8 @@ def user_signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.secure_password = make_password(form.cleaned_data['secure_password'])
+            if 'identification_image' in request.FILES:
+                user.identification_image = request.FILES['identification_image']
             user.save()
             return redirect('/login/')
     else:
@@ -282,50 +289,51 @@ def dynamic_Crypto(request, coin_name):
     return render(request, 'FrontEnd/dynamicCrypto.html', context)
 
 
-def user_profile(request):
-    if request.method == 'POST':
-        print(request.POST['avatar'])
-        value = request.session.get('user_session_id')
-        # Get user details from the retrieved user id
-        user = AccountProfile.objects.get(id=value)
-        user.given_name = request.POST['given_name']
-        user.email_address = request.POST['email_address']
-        user.family_name = request.POST['family_name']
-        user.save()
-        return render(request, 'FrontEnd/profile.html', {'user': user})
-    else:
-        # Retrieve the user id from the session
-        value = request.session.get('user_session_id')
-        # Get user details from the retrieved user id
-        user = AccountProfile.objects.get(id=value)
+# def user_profile(request):
+#     value = request.session.get('user_session_id')
+#     user = AccountProfile.objects.get(id=value)
+#     form = UserProfileForm(request.POST, request.FILES, instance=user)
+#     print("-----------------------------------------------------",form)
+#     if form.is_valid():
 
-        wish_list = user.preferences
-        return render(request, 'FrontEnd/profile.html', {'user': user, 'wish_list': wish_list, 'id': "profile-details"})
-        # return render(request, 'FrontEnd/profile.html', {'user': user})
+#         user.given_name = request.POST['given_name']
+#         user.email_address = request.POST['email_address']
+#         user.family_name = request.POST['family_name']
+#         if 'identification_image' in request.FILES:
+#             user.identification_image = request.FILES['identification_image']
+#         user.save()
+#         return render(request, 'FrontEnd/profile.html', {'user': user})
+#     else:
+
+#         wish_list = user.preferences
+#         return render(request, 'FrontEnd/profile.html', {'user': user, 'wish_list': wish_list, 'id': "profile-details"})
+#         # return render(request, 'FrontEnd/profile.html', {'user': user})
 
 
 def handle_user_profile(request):
     # Retrieve the user's session ID
     session_id = request.session.get('user_session_id')
-    
+    user = AccountProfile.objects.get(id=session_id)
     if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=user)
+        # print("---------------    --------------------------------------",form)
+        if form.is_valid():
         # Extracting user input from POST request
-        new_first_name = request.POST.get('given_name')
-        new_last_name = request.POST.get('family_name')
-        new_email = request.POST.get('email_address')
+            current_user = AccountProfile.objects.get(id=session_id)
+           
+            
+            current_user.email_address = form.cleaned_data['email_address']
+            print(request.FILES['identification_image'])
+            if 'identification_image' in request.FILES:
+                current_user.identification_image = request.FILES['identification_image']
+            current_user.save()
 
-        # Print the avatar information from the request
-        print("Avatar:", request.POST.get('avatar'))
+            # Render the profile template with updated user details
+            return render(request, 'FrontEnd/profile.html', {'user': current_user})
+        else:
+            # Handle the invalid form case
+            return HttpResponse("Operation not allowed.")
 
-        # Fetch and update user information based on the session ID
-        current_user = AccountProfile.objects.get(id=session_id)
-        current_user.given_name = new_first_name
-        current_user.family_name = new_last_name
-        current_user.email_address = new_email
-        current_user.save()
-
-        # Render the profile template with updated user details
-        return render(request, 'FrontEnd/profile.html', {'user': current_user})
 
     else:
         # Fetch user information for a GET request
