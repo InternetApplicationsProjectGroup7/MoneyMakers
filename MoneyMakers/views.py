@@ -291,28 +291,6 @@ def dynamic_Crypto(request, coin_name):
 
     return render(request, 'FrontEnd/dynamicCrypto.html', context)
 
-
-# def user_profile(request):
-#     value = request.session.get('user_session_id')
-#     user = AccountProfile.objects.get(id=value)
-#     form = UserProfileForm(request.POST, request.FILES, instance=user)
-#     print("-----------------------------------------------------",form)
-#     if form.is_valid():
-
-#         user.given_name = request.POST['given_name']
-#         user.email_address = request.POST['email_address']
-#         user.family_name = request.POST['family_name']
-#         if 'identification_image' in request.FILES:
-#             user.identification_image = request.FILES['identification_image']
-#         user.save()
-#         return render(request, 'FrontEnd/profile.html', {'user': user})
-#     else:
-
-#         wish_list = user.preferences
-#         return render(request, 'FrontEnd/profile.html', {'user': user, 'wish_list': wish_list, 'id': "profile-details"})
-#         # return render(request, 'FrontEnd/profile.html', {'user': user})
-
-
 def handle_user_profile(request):
     # Retrieve the user's session ID
     session_id = request.session.get('user_session_id')
