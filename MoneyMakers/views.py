@@ -70,15 +70,18 @@ def login_user(request):
                         request.session['user_session_id'] = found_user.id
                         return HttpResponseRedirect(reverse('MoneyMakers:index'))
                     else:
+                        messages.error(request, "The userid or password do not match.")
                         empty_form = UserLoginForm()
                         context ={'form': empty_form}
                         return render(request, 'FrontEnd/login.html', context)
                 else:
+                    messages.error(request, "The userid or password do not match.")
                     empty_form = UserLoginForm()
                     context ={'form': empty_form}
                     return render(request, 'FrontEnd/login.html', context)
 
             except AccountProfile.DoesNotExist:
+                messages.error(request, "Please create an account.")
                 empty_form = UserLoginForm()
                 context ={'form': empty_form}
                 return render(request, 'FrontEnd/login.html', context)

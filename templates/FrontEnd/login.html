@@ -1,31 +1,4 @@
-<!--?{#<!DOCTYPE html>#}-->
-<!--?{#<html>#}-->
-<!--?{#<head>#}-->
-<!--?{#	<title>Login Page</title>#}-->
-<!--?{#	<link rel="stylesheet" href="../../static/css/style.css">#}-->
-<!--?{#</head>#}-->
-<!--?{#<body>#}-->
-<!--?{#	<div class="container">#}-->
-<!--?{#		<h1>Login</h1>#}-->
-<!--?{#		<form action="{% url 'MoneyMakers:process_form' %}" method="post">#}-->
-<!--?{#            {% csrf_token %}#}-->
-<!--?{#			<input type="text" id="username" name="username" placeholder="Email" required>#}-->
-<!--?{#			<input type="password" id="password" name="password" placeholder="Password" required>#}-->
-<!--?{##}-->
-<!--?{#			<input type="submit" value="Log in" class="login-button ">#}-->
-<!--?{##}-->
-<!--?{#            <button><a href="{% provider_login_url "google" %}">Google</a></button>#}-->
-<!--?{#        #    <button><a href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=1068557462895-p1u30p6teintg16ivbcadc8npt5n9t9q.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&scope=profile%20email&response_type=code&state=drbvD9lb1fwcoeru&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow ">Google</a></button>#}-->
-<!--?{##}-->
-<!--?{#		</form>#}-->
-<!--?{#        <div class="signup">#}-->
-<!--?{#			<p>Don't have an account? <a href="http://localhost:8000/signup">Sign up</a></p>#}-->
-<!--?{#		</div>#}-->
-<!--?{#		<div class="error">#}-->
-<!--?{#		</div>#}-->
-<!--?{#	</div>#}-->
-<!--?{#</body>#}-->
-<!--?{#</html>#}-->
+
 
 <!DOCTYPE html>
 <html>
@@ -35,6 +8,13 @@
 </head>
 <body>
 	<div class="container">
+		{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+			<li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
 		<h1>Login</h1>
 		<form action="" method="post">
 			{% csrf_token %}
