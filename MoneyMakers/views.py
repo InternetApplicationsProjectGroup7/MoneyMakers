@@ -187,8 +187,8 @@ def change_password(request):
         if form.is_valid():
             email_address = form.cleaned_data['email_address']
             secure_password = form.cleaned_data['secure_password']
-            confirm_password = form.cleaned_data['confirm_password']
-            otp = form.cleaned_data['otp']
+            confirm_password = form.cleaned_data['confirm_new_password']
+            otp = form.cleaned_data['verification_code']
             try:
                 user = AccountProfile.objects.get(email_address=email_address)
                 print("user details are:", user.secure_password)
