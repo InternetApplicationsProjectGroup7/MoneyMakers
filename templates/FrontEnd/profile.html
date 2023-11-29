@@ -289,7 +289,7 @@
                     <ul>
                         {% for wishlist_item in wish_list %}
                             <li>
-                                <a href="{% url 'MoneyMakers:dynamic_crypto' coin_name=wishlist_item %}">
+                                <a href="{% url 'MoneyMakers:dynamic_crypto' cryptocurrency_name=wishlist_item %}">
                                     <span>{{ wishlist_item }}</span>
                                 </a>
                                 <a href="remove_to_wishlist/{{ wishlist_item }}">
