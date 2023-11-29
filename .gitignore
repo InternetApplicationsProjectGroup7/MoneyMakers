@@ -13,7 +13,7 @@ local_settings.py
 db.sqlite3
 
 # Ignore media and static files (usually handled by a web server or storage service)
-media/
+
 
 
 # Ignore environment-specific settings
