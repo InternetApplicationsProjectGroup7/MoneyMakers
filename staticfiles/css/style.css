@@ -11,8 +11,9 @@ body {
 
 .container {
     margin: 0 auto;
+    
     width: 400px;
-    padding: 20px;
+    padding: 22px;
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
