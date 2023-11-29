@@ -218,75 +218,69 @@ def change_password(request):
     return render(request, 'FrontEnd/changepassword.html',{"form":form})
 
 
+def generate_crypto_chart(request, cryptocurrency_name):
+    # Retrieve cryptocurrency details
+    crypto = get_object_or_404(CryptoCurrency, name=cryptocurrency_name)
 
-
-
-
-def dynamic_Crypto(request, coin_name):
-
-    coin = get_object_or_404(CryptoCurrency, name=coin_name)
+    # Adjust the current price if it's less than $1
     plt.switch_backend('Agg')
-    if coin.current_price < 1:
-        coin.current_price = 10 + coin.current_price
-    base_value = int(coin.current_price)
+    if crypto.current_price < 1:
+        crypto.current_price += 10
+    initial_price = int(crypto.current_price)
 
-    # Generate 12 monthly values that depend on the base value, for example, fluctuate by up to 15%
-    monthly_changes = np.random.uniform(-0.15, 0.15, 12)
-    monthly_values = base_value * (1 + monthly_changes)
+    # Create fluctuating monthly prices based on the initial price
+    fluctuation_rates = np.random.uniform(-0.15, 0.15, 12)
+    monthly_prices = initial_price * (1 + fluctuation_rates)
 
-    # Generate a date range of the last 12 months
-    end_date = datetime.today()
-    start_date = end_date - timedelta(days=365)
-    dates = pd.date_range(start=start_date, periods=12, freq='MS')  # 'MS' stands for month start frequency
+    # Prepare date range for the past year
+    today = datetime.today()
+    year_ago = today - timedelta(days=365)
+    monthly_dates = pd.date_range(start=year_ago, periods=12, freq='MS')
 
-    # Create the plot
+    # Setup the plot
     fig, ax = plt.subplots(figsize=(10, 5))
-    ax.plot(dates, monthly_values, color='darkorange', marker='o', linewidth=2)
+    ax.plot(monthly_dates, monthly_prices, color='darkorange', marker='o', linewidth=2)
 
-    # Format the dates on the x-axis
+    # Customize the x-axis with date formatting
     ax.xaxis.set_major_locator(mdates.MonthLocator())
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%b'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
     plt.xticks(rotation=45)
 
-    # Set y-axis range to ±15% from the base value
-    y_min = base_value * (1 - 0.2)
-    y_max = base_value * (1 + 0.2)
-    ax.set_ylim([y_min, y_max])
+    # Define the y-axis limits
+    y_axis_min = initial_price * 0.8
+    y_axis_max = initial_price * 1.2
+    ax.set_ylim([y_axis_min, y_axis_max])
 
-   
-    ax.get_yaxis().set_visible(False)
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_visible(False)
-    ax.spines['bottom'].set_visible(True)
-    
-    percentage_change = .15 * 100
-    # Use ax.text() to add annotations to the plot
-    ax.text(0.03, 0.97, f'USD${coin.current_price:,.2f}',
-            transform=ax.transAxes, fontsize=14,
-            verticalalignment='top', bbox=dict(boxstyle='round,pad=0.2', fc='white', alpha=0.3))
+    # Customize plot appearance
+    ax.yaxis.set_visible(False)
+    for spine in ['top', 'right', 'left']:
+        ax.spines[spine].set_visible(False)
 
-    ax.text(0.03, 0.92, f'↗USD${15:,.2f} ({percentage_change:.2f}%)',
-            transform=ax.transAxes, fontsize=12,
-            verticalalignment='top', bbox=dict(boxstyle='round,pad=0.2', fc='white', alpha=0.3))
+    # Add annotations for current price and changes
+    change_percentage = 15
+    ax.text(0.03, 0.97, f'USD${crypto.current_price:,.2f}', transform=ax.transAxes, 
+            fontsize=14, verticalalignment='top', 
+            bbox=dict(boxstyle='round,pad=0.2', fc='white', alpha=0.3))
 
-    # Remaining plot code...
+    ax.text(0.03, 0.92, f'↗USD${15:,.2f} ({change_percentage:.2f}%)', 
+            transform=ax.transAxes, fontsize=12, verticalalignment='top', 
+            bbox=dict(boxstyle='round,pad=0.2', fc='white', alpha=0.3))
 
-    # Convert plot to PNG image
-    buf = BytesIO()
-    plt.savefig(buf, format='png', bbox_inches='tight')
-    plt.close(fig)  # Close the figure to free memory
-    buf.seek(0)  # Rewind the buffer
+    # Convert the plot to a PNG image
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png', bbox_inches='tight')
+    plt.close(fig)
+    buffer.seek(0)
 
-    # Encode the image in base64 and close the buffer
-    image_base64 = base64.b64encode(buf.read()).decode('utf-8')
-    buf.close()
+    # Encode the image to base64
+    encoded_image = base64.b64encode(buffer.read()).decode('utf-8')
+    buffer.close()
 
-    # Construct the image src data URI
-    image_url = f"data:image/png;base64,{image_base64}"
+    # Prepare the image URL
+    image_src = f"data:image/png;base64,{encoded_image}"
     context = {
-        "coin": coin,
-        "data_uri": image_url
+        "crypto": crypto,
+        "chart_url": image_src
     }
 
     return render(request, 'FrontEnd/dynamicCrypto.html', context)
