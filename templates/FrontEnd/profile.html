@@ -289,7 +289,7 @@
                     <ul>
                         {% for wishlist_item in wish_list %}
                             <li>
-                                <a href="{% url 'MoneyMakers:dynamic_crypto' coin_name=wishlist_item %}">
+                                <a href="{% url 'MoneyMakers:dynamic_crypto' cryptocurrency_name=wishlist_item %}">
                                     <span>{{ wishlist_item }}</span>
                                 </a>
                                 <a href="remove_to_wishlist/{{ wishlist_item }}">
@@ -361,7 +361,7 @@
                     {# <button class="save-button" type="submit">Purchase</button>#}
                     {# {% if user.id_image %}#}
             
-                    <button class="save-button" type="submit">Purchase</button>
+                    <button class="save-button" type="submit">Sell</button>
                     {# {% else %}#}
                     {# <button class="save-button" type="button" disabled>Purchase</button>#}
                     {# <p style="color: red;">Please upload a valid ID image before purchasing cryptocurrency.</p>#}

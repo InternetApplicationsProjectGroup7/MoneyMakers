@@ -1,28 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Signup Page</title>
-	<link rel="stylesheet" href="../../static/css/style.css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="../../static/design/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="../../static/design/css/owl.carousel.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../../static/design/css/bootstrap.min.css">
+    <!-- Custom Style -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="password"],
+        .form-container input[type="file"] {
+            border: none;
+            border-bottom: 1px solid #999;
+            font-size: 16px;
+            margin-bottom: 10px;
+            background-color: transparent;
+        }
+        .no-decoration a {
+            text-decoration: none;
+        }
+    </style>
+    <title>Signup Page</title>
 </head>
 <body>
-	<div class="container">
-		<h1>Create Account</h1>
-		<form action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-			<label for="identification_image">Upload ID Image:</label>
-			<input type="file" value="{{ user.identification_image.name }}" id="identification_image" name="identification_image"
-				accept="image/*">
-
-            <button type="submit">Register</button>
-		</form>
-
-        <div class="signup">
-			<p>Already have an account? <a href="http://localhost:8000/login">Login</a></p>
-		</div>
-		<div class="error">
-		</div>
-	</div>
+    <div class="container">
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 order-md-2">
+                        <img src="../../static/design/images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid" style="margin-top: 50px;">
+                    </div>
+                    <div class="col-md-6 contents" style="padding-top: 50px;">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="mb-4">
+                                    <h1>Create Account</h1>
+                                    <div class="form-container">
+                                        <form action="" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+                                            <label for="identification_image">Upload ID Image:</label>
+                                            <input type="file" value="{{ user.identification_image.name }}" id="identification_image" name="identification_image"
+                                                accept="image/*">
+                                            <button type="submit" class="btn text-white btn-block btn-primary" style="margin-top: 10px;">Register</button>
+                                        </form>
+                                    </div>
+                                    <div class="signup" style="margin-top: 15px;">
+                                        <p>Already have an account? <a href="http://localhost:8000/login">Login</a></p>
+                                    </div>
+                                    <!-- Retained the error section and potentially any additional sections as per your existing code -->
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

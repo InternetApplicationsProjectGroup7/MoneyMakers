@@ -1,70 +1,70 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Navigation Bar</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-
-.navbar {
-  background-color: #333;
-  overflow: hidden;
-}
-
-.navbar a {
-  float: left;
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.navbar a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-/* Profile section styles */
-.profile-section {
-  float: right;
-  margin-right: 10px;
-  /* position: relative; */
-}
-
-.profile-section img {
-  width: 40px;
-  height: 25px;
-  border-radius: 50%;
-  margin: 10px;
-  cursor: pointer;
-}
-
-/* Dropdown content styles */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #a71212;
-  z-index: 1;
-  right: 0;
-}
-
-.dropdown-content a {
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  color: white;
-}
-
-/* Show dropdown on hover */
-.profile-section:hover .dropdown-content {
-    padding-right: 12px;
-  display: block;
-}
-.dropdown-content a {
-            clear: both;
-            margin-right: 10px;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white; /* Updated background color to navy blue */
         }
-
-
+        .navbar {
+            background-color: mediumspringgreen;
+            overflow: hidden;
+            position: relative;
+            top: 0;
+            width: 100%;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #2c3e50;
+            color: white;
+        }
+        .profile-section {
+            float: right;
+            margin-right: 10px;
+            position: relative;
+            display: inline-block;
+        }
+        .profile-section img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: mediumspringgreen;
+            z-index: 1;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            right: 0;
+        }
+        .dropdown-content a {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            color: white;
+        }
+        .dropdown-content a:hover {
+            background-color: #2c3e50;
+            color: white;
+        }
+        .profile-section:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -78,39 +78,41 @@
     <div class="profile-section">
         <img src="../../static/person.svg" alt="Profile Image" id="profile-image">
         <div class="dropdown-content" id="dropdown">
-            <a id="login-link">Login / SignUp</a>
+            <a id="login-link">Login / Sign Up</a>
             <a id="profile-link" style="display: none;">My Profile</a>
             <a id="dashboard-link" style="display: none;">Dashboard</a>
         </div>
     </div>
 </div>
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            const isLoggedIn = false;
-    
-            // Show/hide options based on login status
-            if (isLoggedIn) {
-                $("#login-link").hide();
-                $("#profile-link, #dashboard-link").show();
-            } else {
-                $("#profile-link, #dashboard-link").hide();
-            }
-    
-            // Add click events for profile options
-            $("#profile-link").click(function () {
-                alert("My Profile clicked");
-            });
-    
-            $("#dashboard-link").click(function () {
-                alert("Dashboard clicked");
-            });
-    
-            $("#login-link").click(function () {
-                window.location.href = "login.html"
-            });
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const isLoggedIn = false;
+
+        // Show/hide options based on login status
+        if (isLoggedIn) {
+            $("#login-link").hide();
+            $("#profile-link, #dashboard-link").show();
+        } else {
+            $("#profile-link, #dashboard-link").hide();
+        }
+
+        // Add click events for profile options
+        $("#profile-link").click(function () {
+            alert("My Profile clicked");
         });
-    </script>
+
+        $("#dashboard-link").click(function () {
+            alert("Dashboard clicked");
+        });
+
+        $("#login-link").click(function () {
+            window.location.href = "login.html";
+        });
+    });
+</script>
 </body>
-</html>    
+</html>

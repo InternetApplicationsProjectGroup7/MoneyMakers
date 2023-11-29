@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coin Search</title>
     <link rel="stylesheet" href="../../static/css/dashboard.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {#    <script src="../../static/script.js" defer></script>#}
     <style>
@@ -217,12 +218,14 @@ ol, li {
 
     <div class="container">
         <div class="navbar">
-      <ul >
+      <ul class="nav-links">
       <li><a href="{% url 'MoneyMakers:wishlist' %}" onclick="redirectToWishlist()">My Wishlist</a></li>
       <li><a href="#">Home</a></li>
 
+
     <li style="color: #424961">Price :
       <select id="currencySelector">
+
           <option value="usd" selected>USD</option>
           <option value="cad">CAD</option>
           <option value="eur">EUR</option>
@@ -485,7 +488,7 @@ ol, li {
       <th>Market Cap</th>
       <th>Volume (24h)</th>
       <th>Circ. Supply</th>
-      
+
     </tr>
   </thead>
 
@@ -495,10 +498,10 @@ ol, li {
                     <td>{{ forloop.counter }}</td>
                     {% if data.name in wish_list %}
 {#                        <td><a href="/add_to_wishlist/{{ data.name }}"><button class="wishlist-btn" onclick="addToWishlist(this)">★</button></a></td>#}
-                        <td><a href="/add_to_wishlist/{{ data.name }}"><img src="../../static/icon2.png" style="width: 20px ; height: 20px"/> </a></td>
+                        <td><a href="/add_to_wishlist/{{ data.name }}"><img src="../../static/design/images/icon1.png" style="width: 20px ; height: 20px"/> </a></td>
                     {% else %}
 {#                        <td><a href="/add_to_wishlist/{{ data.name }}"><button class="wishlist-btn" onclick="addToWishlist(this)">☆</button></a></td>#}
-                        <td><a href="/add_to_wishlist/{{ data.name }}"><img src="../../static/icon1.png" style="width: 20px ; height: 20px"/> </a></td>
+                        <td><a href="/add_to_wishlist/{{ data.name }}"><img src="../../static/design/images/icon2.png" style="width: 20px ; height: 20px"/> </a></td>
                  {% endif %}
 
 
@@ -521,7 +524,7 @@ ol, li {
             </tbody>
         </table>
 
- 
+
     </div>
     <script>
         $(document).ready(function () {
@@ -559,7 +562,7 @@ ol, li {
         dropdownContent.style.display = "none";
     });
         });
- 
+
 const wishlistButtons = document.querySelectorAll('.wishlist-btn');
 
 // Add click event listener to each button

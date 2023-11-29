@@ -1,33 +1,94 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login Page</title>
-	<link rel="stylesheet" href="../../static/css/style.css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../static/design/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="../../static/design/css/owl.carousel.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../../static/design/css/bootstrap.min.css">
+    <!-- Style -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="password"] {
+            border: none;
+            border-bottom: 1px solid #999;
+            font-size: 16px;
+            margin-bottom: 10px;
+            background-color: transparent;
+            display: block; /* Adjusted to fix the alignment */
+            width: 100%; /* Adjusted to fix the alignment */
+        }
+        .no-decoration a {
+            text-decoration: none;
+        }
+    </style>
+    <title>Login #8</title>
 </head>
 <body>
-	<div class="container">
-		{% if messages %}
-		<ul class="messages">
-			{% for message in messages %}
-			<li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-			{% endfor %}
-		</ul>
-		{% endif %}
-		<h1>Login</h1>
-		<form action="" method="post">
-			{% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Login</button>
-                        <button><a href={% url 'MoneyMakers:send_forgotpassword_mail' %}>ForgotPassword</a></button>
-{#            <button><a href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=1068557462895-p1u30p6teintg16ivbcadc8npt5n9t9q.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&scope=profile%20email&response_type=code&state=drbvD9lb1fwcoeru&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow ">Google</a></button>#}
+    <div class="container">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 order-md-2">
+                        <img src="../../static/design/images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid" style="margin-top: 50px;">
+                    </div>
+                    <div class="col-md-6 contents" style="padding-top: 50px;">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="mb-4">
+                                    <h1>Login</h1>
+                                    <div class="form-container">
+                                        <form action="" method="post">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <button type="submit" class="btn text-white btn-block btn-primary">Login</button>
+                                                   {#  <button><a href={% url 'MoneyMakers:send_forgotpassword_mail' %}>ForgotPassword</a></button>#}
 
-		</form>
-        <div class="signup">
-			<p>Don't have an account? <a href="http://localhost:8000/signup">Sign up</a></p>
-		</div>
-		<div class="error">
-		</div>
-	</div>
+                                    </form>
+                                    </div>
+                                    <div style="margin-top: 20px;">
+                                        <a href="{% url 'MoneyMakers:send_forgotpassword_mail' %}" class="forgot-pass">Forgot Password</a>
+                                    </div>
+                                    <div style="margin-top: 10px;">
+                                        <a href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=1068557462895-p1u30p6teint16ivbcadc8npt5n9t9q.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%38000%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&scope=profile%20email&response_type=code&state=drbvD9lb1fwcoeru&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow" class="no-decoration">Sign in with Google</a>
+                                    </div>
+                                    <div class="signup" style="margin-top: 15px;">
+                                        <p>Don't have an account? <a href="http://localhost:8000/signup">Sign up</a></p>
+                                    </div>
+                                    <!-- Retained the error section and potentially any additional sections as per your existing code -->
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+</html>
