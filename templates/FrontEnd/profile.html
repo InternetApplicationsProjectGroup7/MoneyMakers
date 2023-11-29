@@ -259,7 +259,7 @@
                     <h1>Account Security</h1>
                     <form action="accountsecurity/" method="post">
                         {% csrf_token %}
-                        <div class="frm-group">
+                        <div class="form-group">
                             <label for="current-password">Current Password:</label>
                             <input type="password" id="current-password" name="current-password">
                         </div>
@@ -277,7 +277,7 @@
 
 
                     <h2>Delete Account</h2>
-                    <p>Deleting your account is irreversible and will remove all your data.</p>
+                    <p>Deleting your account is irreversible and will delete all your data.</p>
                     <form action="delete_account/" method="post">
                         {% csrf_token %}
                         <button class="delete-button" onclick="confirmDelete()" type="submit">Delete Account</button>
