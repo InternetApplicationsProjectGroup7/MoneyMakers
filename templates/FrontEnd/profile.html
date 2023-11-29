@@ -214,7 +214,7 @@
                     <li><a href="{% url 'MoneyMakers:purchase_currency' %}" >Purchase Crypto Currency</a></li>
                     <li><a href="{% url 'MoneyMakers:sell_currency' %}" >Sell Crypto Currency</a></li>
                     <!-- <li><a href="{% url 'MoneyMakers:user_purchases' %}">View Purchases</a></li> -->
-    <li><a href="{% url 'MoneyMakers:user_purchases' %}" onclick="showSection('user_purchases')">View Purchases</a></li>
+    <li><a href="{% url 'MoneyMakers:user_purchases' %}" onclick="showSection('user_purchases')">Transaction History</a></li>
 
                 </ul>
             </div>
@@ -343,42 +343,41 @@
             <div id="sell-currency" style="display: none;">
                 <h1>Sell Crypto Currency</h1>
                 <p>Available Balance: <span id="balance">${{ balance }} </span></p>
-                {# {% if messages %}#}
-                {# <ul class="messages">#}
-                    {# {% for message in messages %}#}
-                    {# <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>#}
-                    {# {% endfor %}#}
-                    {# </ul>#}
-                {# {% endif %}#}
+
                 <form method="post" id="sellForm">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <button class="save-button" type="button" onclick="calculateTotal1()">Calculate Total</button>
-                    <p style="font-weight: bold;"> you have Total  ::<span id="Total_asset">0.00</span> : <span id="Total_name"> </span></p> 
+                    <p style="font-weight: bold;"> Total Coins :<span id="Total_asset">0.00</span>  <span id="Total_name"> </span></p>
                     <p>Total Amount: $<span id="totalAmount1">0.00</span></p>
                     <p>Remaing balance in your wallet will be : $<span id="remainigBalance1">0.00</span></p>
             
-                    {# <button class="save-button" type="submit">Purchase</button>#}
-                    {# {% if user.id_image %}#}
+
             
                     <button class="save-button" type="submit">Sell</button>
-                    {# {% else %}#}
-                    {# <button class="save-button" type="button" disabled>Purchase</button>#}
-                    {# <p style="color: red;">Please upload a valid ID image before purchasing cryptocurrency.</p>#}
-                    {##}
-                    {# {% endif %}#}
+
                 </form>
             </div>
-            <div id="user_purchases" style="display: none;">
-                <h1>Transaction History</h1>
-                <ul>
-                    {% for purchase in user_purchases %}
-                    <li>
-                        <span>{{ purchase.action_type }}:-{{ purchase.digital_currency.name }} - Quantity: {{ purchase.volume }} - {{purchase.total_value}} </span>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <div id="user_purchases">
+    <h1>Transaction History</h1>
+    <table style="border-collapse: collapse; width: 100%;">
+        <tr>
+            <th style="border: 5px solid #dddddd; padding: 8px;">Crypto Name</th>
+            <th style="border: 5px solid #dddddd; padding: 8px;">Quantity</th>
+            <th style="border: 5px solid #dddddd; padding: 8px;">Action Type</th>
+            <th style="border: 5px solid #dddddd; padding: 8px;">Price</th>
+        </tr>
+        {% for purchase in user_purchases %}
+        <tr>
+            <td style="border: 5px solid #dddddd; padding: 8px;">{{ purchase.digital_currency.name }}</td>
+            <td style="border: 5px solid #dddddd; padding: 8px;">{{ purchase.volume }}</td>
+            <td style="border: 5px solid #dddddd; padding: 8px;">{{ purchase.action_type }}</td>
+            <td style="border: 5px solid #dddddd; padding: 8px;">{{ purchase.total_value }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
                 <script>
                     
                     const cryptoChoices = JSON.parse('{{ crypto_choices_json|escapejs }}');
@@ -442,29 +441,7 @@
 
 
                     document.getElementById("purchaseForm").addEventListener("submit", function (event) {
-                        //   event.preventDefault(); // Prevent the default form submission
 
-                        // Use AJAX to submit the form data to your Django view
-                            // const formData = new FormData(document.getElementById("purchaseForm"));
-
-                            // fetch("{% url 'MoneyMakers:purchase_currency' %}", {
-                            //     method: "POST",
-                            //     body: formData,
-                            // })
-                            // .then(response => response.json())
-                            // .then(data => {
-                            //     // Display the message in a popup
-                            //     if (data.success) {
-                            //         alert("Purchase successful.");
-                                    // Optionally, reset the form
-                                    // document.getElementById("purchaseForm").reset();
-                                // } else {
-                                    // alert("Insufficient balance to make the purchase.");
-                                // }
-                            // })
-                            // .catch(error => {
-                                // console.error('Error:', error);
-                                // Handle error if needed
                             });
                     
 
